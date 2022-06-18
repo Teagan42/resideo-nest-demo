@@ -1,0 +1,50 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "./libs/*/tsconfig.lib.json",
+      "./tsconfig.json"
+    ],
+    "sourceType": "module",
+    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": false
+  },
+  "plugins": [
+    "eslint-plugin",
+    "@typescript-eslint",
+    "import"
+  ],
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:import/recommended"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "ignorePatterns": [
+    ".eslintrc*",
+    ".tsconfig*"
+  ],
+  "rules": {
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/indent": ["error", 2, { "offsetTernaryExpressions": false, "MemberExpression": false }],
+    "indent": ["error", 2, {"offsetTernaryExpressions":  "off", "MemberExpression": "off" }],
+    "newline-per-chained-call": "warn",
+    "array-element-newline": "warn",
+    "function-call-argument-newline": "warn",
+    "object-property-newline": "warn",
+    "implicit-arrow-linebreak": "off",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off",
+    "curly": [
+      "error",
+      "all"
+    ]
+  }
+}
