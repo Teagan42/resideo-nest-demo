@@ -1,0 +1,22 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs-query/core": "^0.30.0",
+    "@nestjs-query/query-graphql": "^0.30.0",
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/graphql": "^10.0.16",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "dataloader": "^2.1.0",
+    "graphql": "^16.5.0",
+    "graphql-subscriptions": "^2.0.0"
+  }
+}
