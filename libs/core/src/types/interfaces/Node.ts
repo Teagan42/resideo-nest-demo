@@ -7,13 +7,14 @@ import { NodeID } from '@resideo-nest/core/types/scalars/NodeID';
 @InterfaceType(
   'Node',
   {
-    description: '',
+    description: 'Interface defining fields common to all Node objects',
   },
 )
 export abstract class Node {
   @Field(
     () => NodeID,
     {
+      name: 'id',
       description: 'The identifier of the node',
     },
   )
@@ -21,6 +22,7 @@ export abstract class Node {
 
   @Field(
     {
+      name: 'createdAt',
       description: 'When the node was created',
     },
   )
@@ -28,6 +30,7 @@ export abstract class Node {
 
   @Field(
     {
+      name: 'updatedAt',
       description: 'When the node was last updated',
     },
   )
