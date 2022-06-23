@@ -1,4 +1,33 @@
+import {
+  ApolloFederationDriver,
+  ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { NodeID } from '@resideo-nest/core';
+import { UsersResolver } from './users.resolver';
+import { UsersService } from './users.service';
 
-@Module({})
-export class UsersModule {}
+@Module(
+  {
+    imports: [
+      GraphQLModule.forRoot<ApolloFederationDriverConfig>(
+        {
+          driver: ApolloFederationDriver,
+          autoSchemaFile: true,
+          debug: false,
+          playground: false,
+          resolvers: {
+            NodeID: () => NodeID,
+          },
+        },
+      ),
+    ],
+    providers: [
+      NodeID,
+      UsersService,
+      UsersResolver,
+    ],
+  })
+export class UsersModule {
+}

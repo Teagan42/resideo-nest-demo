@@ -1,3 +1,4 @@
+import { IDField } from '@nestjs-query/query-graphql';
 import {
   Field,
   InterfaceType,
@@ -8,10 +9,11 @@ import { NodeID } from '@resideo-nest/core/types/scalars/NodeID';
   'Node',
   {
     description: 'Interface defining fields common to all Node objects',
+    isAbstract: true,
   },
 )
 export abstract class Node {
-  @Field(
+  @IDField(
     () => NodeID,
     {
       name: 'id',

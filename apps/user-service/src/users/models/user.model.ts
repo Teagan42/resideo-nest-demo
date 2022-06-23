@@ -1,6 +1,12 @@
 import {
+  FilterableField,
+  IDField,
+} from '@nestjs-query/query-graphql';
+import {
   Directive,
   Field,
+  ID,
+  InputType,
   ObjectType,
 } from '@nestjs/graphql';
 import {
@@ -19,17 +25,18 @@ import { Node } from '@resideo-nest/core/types/interfaces/Node';
     ],
   },
 )
-@Directive('@key(fields: "id")')
-export class User {
-  @Field(
+export class User
+  extends Node {
+  @IDField(
     () => NodeID,
     {
-      description: 'Identifier for User object',
+      name: 'id',
+      description: 'The identifier of the node',
     },
   )
   id: string;
 
-  @Field(
+  @FilterableField(
     {
       name: 'firstName',
       description: 'First name of the user',
@@ -37,19 +44,27 @@ export class User {
   )
   firstName: string;
 
-  @Field(
+  @FilterableField(
+    {
+      name: 'lastName',
+      description: 'Last name of the user',
+    },
+  )
+  lastName: string;
+
+  @FilterableField(
     () => EmailAddress,
     {
-      nullable: true
-    }
+      nullable: true,
+    },
   )
   email?: string;
 
   @Field(
     () => PhoneNumber,
     {
-      nullable: true
-    }
+      nullable: true,
+    },
   )
   phoneNumber?: string;
 
