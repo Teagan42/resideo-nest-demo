@@ -3,17 +3,14 @@ import {
   IDField,
 } from '@nestjs-query/query-graphql';
 import {
-  Directive,
   Field,
-  ID,
-  InputType,
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  EmailAddress,
-  PhoneNumber,
-  NodeID,
-  Minimum,
+    EmailAddress,
+    PhoneNumber,
+    NodeID,
+    Minimum, Match,
 } from '@resideo-nest/core';
 import { Node } from '@resideo-nest/core/types/interfaces/Node';
 
@@ -60,6 +57,14 @@ export class User
   )
   email?: string;
 
+  @Match(/[a-z]+./)
+  @Field(
+      {
+          name: "SemVer"
+      }
+  )
+  semver: string;
+
   @Field(
     () => PhoneNumber,
     {
@@ -67,8 +72,4 @@ export class User
     },
   )
   phoneNumber?: string;
-
-  @Minimum(5)
-  @Field()
-  rank: number;
 }

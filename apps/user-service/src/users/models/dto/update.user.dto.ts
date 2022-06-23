@@ -10,11 +10,13 @@ import { User } from '../user.model';
     description: 'Required shape to create a user',
   },
 )
-export class CreateUser
+export class CreateDto
   extends OmitType(
     User,
     [
       'id',
+        'createdAt',
+        'updatedAt'
     ],
   ) {
 }

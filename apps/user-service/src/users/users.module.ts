@@ -17,6 +17,9 @@ import { UsersService } from './users.service';
           autoSchemaFile: true,
           debug: false,
           playground: false,
+          buildSchemaOptions: {
+              // directives:
+          },
           resolvers: {
             NodeID: () => NodeID,
           },
