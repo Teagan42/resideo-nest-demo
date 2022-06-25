@@ -45,6 +45,14 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running the federation
+
+```shell
+brew install moreutils
+
+./start.debug.sh
+```
+
 ## Test
 
 ```bash
