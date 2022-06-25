@@ -7,10 +7,11 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
 import { User } from './models/user.model';
-import { UsersResolver } from './users.resolver';
-import { UsersService } from './users.service';
+import { DevicesResolver } from './devices.resolver';
+import { DevicesService } from './devices.service';
 import { typeDefs as scalarTypeDefs } from 'graphql-scalars';
 import { resolvers as scalarResolvers } from 'graphql-scalars';
+import { UsersResolver } from './users.resolver';
 
 @Module(
   {
@@ -19,22 +20,26 @@ import { resolvers as scalarResolvers } from 'graphql-scalars';
         {
           driver: ApolloFederationDriver,
           autoSchemaFile: true,
-          debug: true,
-          playground: true,
           typeDefs: {
             ...scalarTypeDefs,
           },
           resolvers: {
             ...scalarResolvers,
-            NodeID: NodeID
+            NodeID: NodeID,
           },
+          buildSchemaOptions: {
+            orphanedTypes: [
+              User
+            ]
+          }
         },
       ),
     ],
     providers: [
-      UsersService,
-      UsersResolver,
+      DevicesService,
+      DevicesResolver,
+      UsersResolver
     ],
   })
-export class UsersModule {
+export class DevicesModule {
 }

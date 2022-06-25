@@ -1,9 +1,9 @@
-import { IDField } from '@nestjs-query/query-graphql';
 import {
   Field,
+  InputType,
   InterfaceType,
 } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core/types/scalars/NodeID';
+import { NodeID } from '@resideo-nest/core/types';
 
 @InterfaceType(
   'Node',
@@ -12,8 +12,8 @@ import { NodeID } from '@resideo-nest/core/types/scalars/NodeID';
     isAbstract: true,
   },
 )
-export abstract class Node {
-  @IDField(
+export class Node {
+  @Field(
     () => NodeID,
     {
       name: 'id',
