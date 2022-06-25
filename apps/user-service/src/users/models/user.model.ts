@@ -1,12 +1,12 @@
 import {
   Directive,
   Field,
-  InputType,
   ObjectType,
 } from '@nestjs/graphql';
 import {
-    EmailAddress,
-    PhoneNumber,
+  Address,
+  EmailAddress,
+  PhoneNumber,
 } from '@resideo-nest/core';
 import { Node } from '@resideo-nest/core/types/interfaces/Node';
 
@@ -53,4 +53,13 @@ export class User
     },
   )
   phoneNumber?: string;
+
+  @Field(
+    () => Address,
+    {
+      description: "Address of the user.",
+      nullable: true,
+    }
+  )
+  address?: Address
 }

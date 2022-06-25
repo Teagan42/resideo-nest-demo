@@ -50,7 +50,7 @@ $ npm run start:prod
 ```shell
 brew install moreutils
 
-./start.debug.sh
+./start
 ```
 
 ## Test

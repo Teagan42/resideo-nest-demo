@@ -17,7 +17,8 @@ export class CreateUserDto extends
       'firstName',
       'lastName',
       'phoneNumber',
-      'email'
+      'email',
+      'address'
     ]
   ){
 }

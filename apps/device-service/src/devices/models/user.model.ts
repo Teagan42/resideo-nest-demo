@@ -4,10 +4,7 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  EmailAddress,
-  Node,
   NodeID,
-  PhoneNumber,
 } from '@resideo-nest/core';
 import { Device } from './device.model';
 

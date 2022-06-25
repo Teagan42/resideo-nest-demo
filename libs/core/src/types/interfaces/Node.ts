@@ -3,7 +3,10 @@ import {
   InputType,
   InterfaceType,
 } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core/types';
+import {
+  DateTime,
+  NodeID,
+} from '@resideo-nest/core/types';
 
 @InterfaceType(
   'Node',
@@ -23,6 +26,7 @@ export class Node {
   id: string;
 
   @Field(
+    () => DateTime,
     {
       name: 'createdAt',
       description: 'When the node was created',
@@ -31,6 +35,7 @@ export class Node {
   createdAt: Date;
 
   @Field(
+    () => DateTime,
     {
       name: 'updatedAt',
       description: 'When the node was last updated',

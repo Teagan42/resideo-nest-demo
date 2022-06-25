@@ -2,7 +2,9 @@ import {
   InputType,
   OmitType,
 } from '@nestjs/graphql';
-import { Node } from '@resideo-nest/core';
+import {
+  Node
+} from '@resideo-nest/core/types';
 
 @InputType(
   'NodeDto',
