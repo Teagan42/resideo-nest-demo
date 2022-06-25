@@ -40,8 +40,8 @@
     }
   },
   "compilerOptions": {
-    "webpack": true,
-    "tsConfigPath": "apps/user-service/tsconfig.app.json"
+    "webpack": false,
+    "tsConfigPath": "tsconfig.json"
   },
   "monorepo": true
 }

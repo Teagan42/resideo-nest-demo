@@ -7,6 +7,5 @@ export {
 export {
   GraphQLEmailAddress as EmailAddress,
   GraphQLPhoneNumber as PhoneNumber,
+  GraphQLMAC as MAC
 } from './external';
-
-export * from './directives';

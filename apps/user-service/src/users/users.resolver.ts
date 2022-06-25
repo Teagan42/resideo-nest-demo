@@ -5,23 +5,33 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
-import {NodeID} from '@resideo-nest/core';
-import {User} from './models/user.model';
-import {UsersService} from './users.service';
-import {CreateUserDto} from "./models/dto/create.user.dto";
+import { NodeID } from '@resideo-nest/core';
+import { User } from './models/user.model';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './models/dto/create.user.dto';
 
 @Resolver((of) => User)
 export class UsersResolver {
   constructor(
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {
+  }
+
+  @Query(
+    () => [User],
+    {
+      name: 'allUsers',
+    },
+  )
+  getAllUsers(): User[] {
+    return this.usersService.all();
   }
 
   @Query((returns) => User)
   getUser(@Args({
-    name: 'id',
-    type: () => NodeID,
-  }) id: string): User {
+                  name: 'id',
+                  type: () => NodeID,
+                }) id: string): User {
     return this.usersService.findById(id);
   }
 
@@ -33,12 +43,15 @@ export class UsersResolver {
   @Mutation(
     returns => User,
     {
-      name: "createUser",
-      description: "Create a new User",
-    }
+      name: 'createUser',
+      description: 'Create a new User',
+    },
   )
-  async createUser(@Args('input', {type: () => CreateUserDto}) input: CreateUserDto): Promise<User> {
-
+  async createUser(@Args(
+    'input',
+    { type: () => CreateUserDto },
+  ) input: CreateUserDto): Promise<User> {
+    return this.usersService.create(input);
   }
 
 }

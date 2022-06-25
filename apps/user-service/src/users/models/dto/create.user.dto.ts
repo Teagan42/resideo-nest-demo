@@ -1,8 +1,8 @@
 import {
   InputType,
-  OmitType,
+  PickType,
 } from '@nestjs/graphql';
-import { User } from '../user.model';
+import { BaseUserDto } from './base.user.dto';
 
 @InputType(
   'CreateUserDto',
@@ -10,13 +10,14 @@ import { User } from '../user.model';
     description: 'Required shape to create a user',
   },
 )
-export class CreateUserDto
-  extends OmitType(
-    User,
+export class CreateUserDto extends
+  PickType(
+    BaseUserDto,
     [
-      'id',
-      'createdAt',
-      'updatedAt'
-    ],
-  ) {
+      'firstName',
+      'lastName',
+      'phoneNumber',
+      'email'
+    ]
+  ){
 }

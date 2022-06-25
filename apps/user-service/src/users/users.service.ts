@@ -1,34 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { NodeID } from '@resideo-nest/core';
+import { toId } from '@resideo-nest/core';
+import { randomInt } from 'crypto';
+import { CreateUserDto } from './models/dto/create.user.dto';
 import { User } from './models/user.model';
-import {Repository} from "../data/repository";
-
 @Injectable()
 export class UsersService {
   constructor(
-    private readonly entityRepository: Repository<undefined, undefined>
   ) {
   }
   private users: User[] = [
     {
-      id: 'User:1',
+      id: toId('User', '1'),
       firstName: 'John',
       lastName: 'Rambo',
-      semver: '1.0.0',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      id: 'User:2',
+      id: toId('User', '2'),
       firstName: 'Richard',
       lastName: 'Hendricks',
-      semver: 'abc',
       createdAt: new Date(),
       updatedAt: new Date()
     },
   ];
 
+  all(): User[] {
+    return this.users;
+  }
+
   findById(id: string): User {
     return this.users.find((user) => user.id === id);
+  }
+
+  create(input: CreateUserDto): User {
+    const result = Object.assign(new User(), input);
+    result.createdAt = new Date();
+    result.updatedAt = new Date();
+    result.id = toId("User", randomInt(1000).toString());
+    this.users.push(result);
+    return result;
   }
 }
