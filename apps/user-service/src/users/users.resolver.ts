@@ -6,6 +6,7 @@ import {
   ResolveReference,
 } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
+import { FilterUserDto } from './models/dto/filter.user.dto';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './models/dto/create.user.dto';
@@ -33,6 +34,27 @@ export class UsersResolver {
                   type: () => NodeID,
                 }) id: string): User {
     return this.usersService.findById(id);
+  }
+
+  @Query(() => [User])
+  filterUsers(@Args({
+                      name: 'criteria',
+                      type: () => FilterUserDto
+                    }) criteria: FilterUserDto): User[] {
+    return this.usersService.all()
+      .filter(
+        (user) =>
+          criteria.email ? user.email === criteria.email : true,
+      ).filter(
+        (user) =>
+          criteria.firstName ? user.firstName === criteria.firstName : true,
+      ).filter(
+        (user) =>
+          criteria.lastName ? user.lastName === criteria.lastName : true,
+      ).filter(
+        (user) =>
+          criteria.phoneNumber ? user.phoneNumber === criteria.phoneNumber : true,
+      )
   }
 
   @ResolveReference()

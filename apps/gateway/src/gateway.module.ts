@@ -15,10 +15,14 @@ import { GatewayService } from './gateway.service';
       GraphQLModule.forRoot<ApolloGatewayDriverConfig>(
         {
           driver: ApolloGatewayDriver,
+          server: {
+
+          },
           gateway: {
             __exposeQueryPlanExperimental: true,
             supergraphSdl: new IntrospectAndCompose(
               {
+                pollIntervalInMs: 1500,
                 subgraphs: [
                   {
                     name: 'users',
