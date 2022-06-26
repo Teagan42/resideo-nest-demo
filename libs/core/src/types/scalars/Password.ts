@@ -1,7 +1,7 @@
 import { CoreConfig } from '@resideo-nest/core/config';
-import { ConstrainedString } from '@resideo-nest/core/types/scalars/ConstrainedString';
+import { constrainedString } from '@resideo-nest/core/types/scalars/ConstrainedString';
 
-export const Password = ConstrainedString(
+export const Password = constrainedString(
   "Password",
   "Account password scalar",
   CoreConfig.password

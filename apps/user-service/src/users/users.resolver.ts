@@ -6,11 +6,11 @@ import {
   ResolveReference,
 } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
+import { CreateUserDto } from './models/dto/create.user.dto';
 import { FilterUserDto } from './models/dto/filter.user.dto';
 import { UpdateUserDto } from './models/dto/update.user.dto';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './models/dto/create.user.dto';
 
 @Resolver((of) => User)
 export class UsersResolver {

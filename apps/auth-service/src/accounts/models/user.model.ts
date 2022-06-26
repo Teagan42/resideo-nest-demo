@@ -3,9 +3,7 @@ import {
   Field,
   ObjectType,
 } from '@nestjs/graphql';
-import {
-  NodeID,
-} from '@resideo-nest/core';
+import { NodeID } from '@resideo-nest/core';
 import { Account } from './account.model';
 
 @ObjectType()

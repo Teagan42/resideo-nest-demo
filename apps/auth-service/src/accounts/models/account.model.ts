@@ -4,16 +4,12 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  Address,
-  EmailAddress,
   Node,
   NodeID,
   Password,
-  PhoneNumber,
   Username,
 } from '@resideo-nest/core';
 import { User } from './user.model';
-
 
 @ObjectType(
   {
@@ -29,7 +25,7 @@ export class Account
   @Field(
     () => Username,
     {
-      name: "userName",
+      name: "username",
       description: "Account username associated with this user",
     }
   )
@@ -38,7 +34,7 @@ export class Account
   @Field(
     () => Password,
     {
-      name: "userName",
+      name: "password",
       description: "Account username associated with this user",
     }
   )

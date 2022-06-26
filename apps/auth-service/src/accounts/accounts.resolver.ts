@@ -5,7 +5,6 @@ import {
   Query,
   ResolveField,
   Resolver,
-  ResolveReference,
 } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
 import { AccountsService } from './accounts.service';

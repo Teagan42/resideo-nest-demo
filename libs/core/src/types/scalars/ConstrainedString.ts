@@ -1,7 +1,4 @@
-import {
-  CoreConfig,
-  StringConstraints,
-} from '@resideo-nest/core/config';
+import { StringConstraints } from '@resideo-nest/core/config';
 import { escapeRegExp } from '@resideo-nest/core/helpers';
 import {
   GraphQLError,
@@ -10,7 +7,7 @@ import {
   ValueNode,
 } from 'graphql';
 
-export const ConstrainedString = (
+export const constrainedString = (
   name: string,
   description: string,
   constraints: StringConstraints,
@@ -76,4 +73,4 @@ export const ConstrainedString = (
       },
     },
   );
-};
+}

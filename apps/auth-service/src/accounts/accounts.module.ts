@@ -5,8 +5,10 @@ import {
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
-import { AccountsService } from './accounts.service';
 import { resolvers as scalarResolvers } from 'graphql-scalars';
+import { AccountsResolver } from './accounts.resolver';
+import { AccountsService } from './accounts.service';
+import { UsersResolver } from './users.resolver';
 
 let scalarTypeDefs;
 
@@ -24,13 +26,18 @@ let scalarTypeDefs;
           },
           resolvers: {
             ...scalarResolvers,
-            NodeID: NodeID
+            NodeID: NodeID,
           },
         },
       ),
     ],
-    providers: [AccountsService],
-    exports: [AccountsService]
-  }
+    providers: [
+      AccountsService,
+      AccountsResolver,
+      UsersResolver,
+    ],
+    exports: [AccountsService],
+  },
 )
-export class AccountsModule {}
+export class AccountsModule {
+}

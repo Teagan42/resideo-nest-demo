@@ -1,6 +1,5 @@
 import {
   Field,
-  InputType,
   InterfaceType,
 } from '@nestjs/graphql';
 import {

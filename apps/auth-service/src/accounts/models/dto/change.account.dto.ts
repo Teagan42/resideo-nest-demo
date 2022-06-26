@@ -1,5 +1,4 @@
 import {
-  Field,
   InputType,
   PickType,
 } from '@nestjs/graphql';
