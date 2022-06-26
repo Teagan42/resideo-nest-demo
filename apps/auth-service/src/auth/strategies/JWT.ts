@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Credentials } from '@reside-nest/auth/../credentials/credentials';
 import {
   ExtractJwt,
   Strategy,
 } from 'passport-jwt';
+import { jwtConstants } from '../../constants';
+import { Credentials } from '../credentials/credentials';
 
 @Injectable()
 export class JWTStrategy<CredentialsType extends Credentials>

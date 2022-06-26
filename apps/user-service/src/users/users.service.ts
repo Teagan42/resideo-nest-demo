@@ -10,22 +10,7 @@ export class UsersService {
   constructor(
   ) {
   }
-  private users: User[] = [
-    {
-      id: toId('User', '1'),
-      firstName: 'John',
-      lastName: 'Rambo',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      id: toId('User', '2'),
-      firstName: 'Richard',
-      lastName: 'Hendricks',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-  ];
+  private users: User[] = []
 
   all(): User[] {
     return this.users;

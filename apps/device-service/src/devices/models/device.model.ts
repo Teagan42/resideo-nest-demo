@@ -12,6 +12,7 @@ import { User } from './user.model';
 
 @ObjectType(
   {
+    description: "IoT Device",
     implements: [
       Node,
     ],

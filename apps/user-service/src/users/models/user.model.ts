@@ -12,6 +12,7 @@ import { Node } from '@resideo-nest/core/types/interfaces/Node';
 
 @ObjectType(
   {
+    description: "Represents a user in the system",
     implements: [
       Node,
     ],

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Credentials } from '@reside-nest/auth/../credentials/credentials';
+import { Credentials } from '../credentials/credentials';
 
 class NoStrategy {}
 
