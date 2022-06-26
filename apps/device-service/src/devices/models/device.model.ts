@@ -6,7 +6,7 @@ import {
 import {
   MAC,
   Node,
-  NodeID,
+  NodeId,
 } from '@resideo-nest/core';
 import { User } from './user.model';
 
@@ -38,7 +38,7 @@ export class Device
   name: string;
 
   @Field(
-    () => NodeID,
+    () => NodeId,
     {
       name: "userId",
       description: "Identifier of the user associated with this device"

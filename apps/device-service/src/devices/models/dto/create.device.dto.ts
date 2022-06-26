@@ -3,7 +3,7 @@ import {
   InputType,
   PickType,
 } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { BaseDeviceDto } from './base.device.dto';
 
 @InputType(

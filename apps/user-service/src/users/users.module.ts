@@ -5,7 +5,7 @@ import {
 import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { User } from './models/user.model';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
@@ -26,7 +26,7 @@ import { resolvers as scalarResolvers } from 'graphql-scalars';
           },
           resolvers: {
             ...scalarResolvers,
-            NodeID: NodeID
+            NodeID: NodeId
           },
         },
       ),

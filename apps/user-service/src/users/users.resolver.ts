@@ -5,7 +5,7 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { FilterUserDto } from './models/dto/filter.user.dto';
 import { UpdateUserDto } from './models/dto/update.user.dto';
 import { User } from './models/user.model';
@@ -32,7 +32,7 @@ export class UsersResolver {
   @Query((returns) => User)
   getUser(@Args({
                   name: 'id',
-                  type: () => NodeID,
+                  type: () => NodeId,
                 }) id: string): User {
     return this.usersService.findById(id);
   }

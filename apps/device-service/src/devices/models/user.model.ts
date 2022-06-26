@@ -4,7 +4,7 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  NodeID,
+  NodeId,
 } from '@resideo-nest/core';
 import { Device } from './device.model';
 
@@ -13,7 +13,7 @@ import { Device } from './device.model';
 @Directive('@key(fields: "id")')
 export class User {
   @Field(
-    () => NodeID,
+    () => NodeId,
   )
   @Directive('@external')
   id: string;

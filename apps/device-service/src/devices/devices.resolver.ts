@@ -7,7 +7,7 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { DevicesService } from './devices.service';
 import { Device } from './models/device.model';
 import { CreateDeviceDto } from './models/dto/create.device.dto';
@@ -33,7 +33,7 @@ export class DevicesResolver {
   @Query((returns) => Device)
   getDevice(@Args({
                   name: 'id',
-                  type: () => NodeID,
+                  type: () => NodeId,
                 }) id: string): Device {
     return this.devicesService.findById(id);
   }

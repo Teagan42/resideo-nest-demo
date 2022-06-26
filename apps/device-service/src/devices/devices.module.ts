@@ -5,7 +5,7 @@ import {
 import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { NodeID } from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { User } from './models/user.model';
 import { DevicesResolver } from './devices.resolver';
 import { DevicesService } from './devices.service';
@@ -25,7 +25,7 @@ import { UsersResolver } from './users.resolver';
           },
           resolvers: {
             ...scalarResolvers,
-            NodeID: NodeID,
+            NodeID: NodeId,
           },
           buildSchemaOptions: {
             orphanedTypes: [
