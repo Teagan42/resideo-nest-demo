@@ -7,6 +7,7 @@ import {
 } from '@nestjs/graphql';
 import { NodeID } from '@resideo-nest/core';
 import { FilterUserDto } from './models/dto/filter.user.dto';
+import { UpdateUserDto } from './models/dto/update.user.dto';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './models/dto/create.user.dto';
@@ -76,4 +77,17 @@ export class UsersResolver {
     return this.usersService.create(input);
   }
 
+  @Mutation(
+    () => User,
+    {
+      name: "updateUser",
+      description: "Updates a user entity"
+    }
+  )
+  async updateUser(@Args(
+    'input',
+    {type: () => UpdateUserDto}
+  ) input: UpdateUserDto): Promise<User> {
+    return this.usersService.update(input);
+  }
 }
