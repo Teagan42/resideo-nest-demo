@@ -25,6 +25,16 @@ export class ClaimsResolver {
     return { __typename: 'Account', id: claim.accountId };
   }
 
+  @Query(
+    () => [Claim],
+    {
+      name: 'allClaims',
+    },
+  )
+  getAllClaims(): Claim[] {
+    return this.claimsService.all();
+  }
+
   @Mutation(
     returns => Claim,
     {

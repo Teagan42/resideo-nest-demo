@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { toId } from '@resideo-nest/core';
+import { randomInt } from 'crypto';
 import { AccountsService } from './accounts.service';
 import { Account } from './models/account.model';
 import { Claim } from './models/claim.model';
@@ -11,20 +13,35 @@ export class ClaimsService {
   ) {
   }
 
+  private claims: Claim[] = [];
+
+  all(): Claim[] {
+    return this.claims;
+  }
+
   createClaim(
     input: CreateClaimDto,
   ): Claim {
-    const claim = Object.assign(new Claim(), input);
-    const account = this.accountService.findById(input.accountId);
-    if (account) {
-      account.claims.push();
-    }
+    const claim = Object.assign(
+      new Claim(),
+      input,
+    );
+    claim.createdAt = new Date();
+    claim.updatedAt = new Date();
+    claim.id = toId(
+      'Account',
+      randomInt(1000)
+        .toString(),
+    );
+    this.claims.push(claim);
     return claim;
   }
 
   getClaims(
-    account: Account
+    accountId: string,
   ): Claim[] {
-    return [];
+    return this.claims.filter(
+      (claim) => claim.accountId === accountId,
+    );
   }
 }

@@ -43,15 +43,17 @@ export class Claim extends Node {
     () => NodeID,
     {
       name: "nodeId",
-      description: 'Identifier of the subject node'
+      description: 'Identifier of the subject node',
+      nullable: true,
     }
   )
-  nodeId: string;
+  nodeId?: string;
 
   @Field(
     {
       name: 'field',
-      description: "The subject's field name for this claim"
+      description: "The subject's field name for this claim",
+      nullable: true,
     }
   )
   field?: string;

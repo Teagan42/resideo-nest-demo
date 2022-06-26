@@ -17,6 +17,16 @@ export class User {
   id: string;
 
   @Field(
+    () => NodeID,
+    {
+      name: "accountId",
+      description: 'Identifier for the account associated with this user',
+    }
+  )
+  accountId: string;
+
+
+  @Field(
     () => Account,
     {
       description: 'Account associated with this user',

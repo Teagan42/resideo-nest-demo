@@ -1,5 +1,6 @@
 import {
   InputType,
+  OmitType,
   PickType,
 } from '@nestjs/graphql';
 import { BaseClaimDto } from './base.claim.dto';
@@ -18,7 +19,23 @@ export class CreateClaimDto
       'nodeId',
       'field',
       'expiresAt',
-      'accountId'
+      'accountId',
     ],
   ) {
+}
+
+@InputType(
+  'CreateAccountClaimDto',
+  {
+    description: 'Required shape to create a claim in line with account creation',
+  },
+)
+export class CreateAccountClaimDto
+  extends OmitType(
+    CreateClaimDto,
+    [
+      'accountId',
+    ],
+  ) {
+
 }

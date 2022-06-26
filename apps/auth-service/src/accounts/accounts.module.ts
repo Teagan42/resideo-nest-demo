@@ -8,6 +8,8 @@ import { NodeID } from '@resideo-nest/core';
 import { resolvers as scalarResolvers } from 'graphql-scalars';
 import { AccountsResolver } from './accounts.resolver';
 import { AccountsService } from './accounts.service';
+import { ClaimsResolver } from './claims.resolver';
+import { ClaimsService } from './claims.service';
 import { UsersResolver } from './users.resolver';
 
 let scalarTypeDefs;
@@ -35,6 +37,8 @@ let scalarTypeDefs;
       AccountsService,
       AccountsResolver,
       UsersResolver,
+      ClaimsService,
+      ClaimsResolver
     ],
     exports: [AccountsService],
   },
