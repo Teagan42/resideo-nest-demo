@@ -17,13 +17,13 @@ export const CoreConfig: Config = {
     maxLength: 20,
     minSymbols: 1,
     minDigits: 1,
-    allowedSymbols: "@#$%^&*_-=+",
+    allowedSymbols: '@#$%^&*_-=+',
   },
   username: {
     minLength: 5,
     maxLength: 20,
     minSymbols: 0,
     minDigits: 0,
-    allowedSymbols: "@._"
-  }
-}
+    allowedSymbols: '@._',
+  },
+};

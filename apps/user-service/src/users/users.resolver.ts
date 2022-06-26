@@ -6,11 +6,11 @@ import {
   ResolveReference,
 } from '@nestjs/graphql';
 import { NodeId } from '@resideo-nest/core';
+import { CreateUserDto } from './models/dto/create.user.dto';
 import { FilterUserDto } from './models/dto/filter.user.dto';
 import { UpdateUserDto } from './models/dto/update.user.dto';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './models/dto/create.user.dto';
 
 @Resolver((of) => User)
 export class UsersResolver {
@@ -40,22 +40,33 @@ export class UsersResolver {
   @Query(() => [User])
   filterUsers(@Args({
                       name: 'criteria',
-                      type: () => FilterUserDto
+                      type: () => FilterUserDto,
                     }) criteria: FilterUserDto): User[] {
     return this.usersService.all()
-      .filter(
-        (user) =>
-          criteria.email ? user.email === criteria.email : true,
-      ).filter(
-        (user) =>
-          criteria.firstName ? user.firstName === criteria.firstName : true,
-      ).filter(
-        (user) =>
-          criteria.lastName ? user.lastName === criteria.lastName : true,
-      ).filter(
-        (user) =>
-          criteria.phoneNumber ? user.phoneNumber === criteria.phoneNumber : true,
-      )
+               .filter(
+                 (user) =>
+                   criteria.email
+                   ? user.email === criteria.email
+                   : true,
+               )
+               .filter(
+                 (user) =>
+                   criteria.firstName
+                   ? user.firstName === criteria.firstName
+                   : true,
+               )
+               .filter(
+                 (user) =>
+                   criteria.lastName
+                   ? user.lastName === criteria.lastName
+                   : true,
+               )
+               .filter(
+                 (user) =>
+                   criteria.phoneNumber
+                   ? user.phoneNumber === criteria.phoneNumber
+                   : true,
+               );
   }
 
   @ResolveReference()
@@ -80,13 +91,13 @@ export class UsersResolver {
   @Mutation(
     () => User,
     {
-      name: "updateUser",
-      description: "Updates a user entity"
-    }
+      name: 'updateUser',
+      description: 'Updates a user entity',
+    },
   )
   async updateUser(@Args(
     'input',
-    {type: () => UpdateUserDto}
+    { type: () => UpdateUserDto },
   ) input: UpdateUserDto): Promise<User> {
     return this.usersService.update(input);
   }

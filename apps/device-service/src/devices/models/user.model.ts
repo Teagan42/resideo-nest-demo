@@ -3,9 +3,7 @@ import {
   Field,
   ObjectType,
 } from '@nestjs/graphql';
-import {
-  NodeId,
-} from '@resideo-nest/core';
+import { NodeId } from '@resideo-nest/core';
 import { Device } from './device.model';
 
 @ObjectType()
@@ -21,9 +19,9 @@ export class User {
   @Field(
     () => [Device],
     {
-      description: "Devices associated with this user",
-      nullable: true
-    }
+      description: 'Devices associated with this user',
+      nullable: true,
+    },
   )
   devices?: Device[];
 }

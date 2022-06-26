@@ -7,25 +7,10 @@ import { User } from './models/user.model';
 
 @Injectable()
 export class UsersService {
-  constructor(
-  ) {
+  private users: User[] = [];
+
+  constructor() {
   }
-  private users: User[] = [
-    {
-      id: toId('User', '1'),
-      firstName: 'John',
-      lastName: 'Rambo',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      id: toId('User', '2'),
-      firstName: 'Richard',
-      lastName: 'Hendricks',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-  ];
 
   all(): User[] {
     return this.users;
@@ -36,21 +21,28 @@ export class UsersService {
   }
 
   create(input: CreateUserDto): User {
-    const result = Object.assign(new User(), input);
+    const result = Object.assign(
+      new User(),
+      input,
+    );
     result.createdAt = new Date();
     result.updatedAt = new Date();
-    result.id = toId("User", randomInt(1000).toString());
+    result.id = toId(
+      'User',
+      randomInt(1000)
+        .toString(),
+    );
     this.users.push(result);
     return result;
   }
 
   update(input: UpdateUserDto): User {
     const user = this.users.find(
-      (user) => user.id === input.id
+      (user) => user.id === input.id,
     );
     return Object.assign(
       user,
-      input
+      input,
     );
   }
 }

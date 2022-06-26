@@ -5,7 +5,6 @@ import {
   Query,
   ResolveField,
   Resolver,
-  ResolveReference,
 } from '@nestjs/graphql';
 import { NodeId } from '@resideo-nest/core';
 import { DevicesService } from './devices.service';
@@ -32,15 +31,18 @@ export class DevicesResolver {
 
   @Query((returns) => Device)
   getDevice(@Args({
-                  name: 'id',
-                  type: () => NodeId,
-                }) id: string): Device {
+                    name: 'id',
+                    type: () => NodeId,
+                  }) id: string): Device {
     return this.devicesService.findById(id);
   }
 
   @ResolveField(() => User)
   user(@Parent() device: Device): any {
-    return { __typename: 'User', id: device.userId };
+    return {
+      __typename: 'User',
+      id: device.userId,
+    };
   }
 
   @Mutation(

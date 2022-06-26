@@ -8,16 +8,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { GatewayController } from './gateway.controller';
 import { GatewayService } from './gateway.service';
 
-
 @Module(
   {
     imports: [
       GraphQLModule.forRoot<ApolloGatewayDriverConfig>(
         {
           driver: ApolloGatewayDriver,
-          server: {
-
-          },
+          server: {},
           gateway: {
             __exposeQueryPlanExperimental: true,
             supergraphSdl: new IntrospectAndCompose(

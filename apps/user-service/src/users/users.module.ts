@@ -2,15 +2,15 @@ import {
   ApolloFederationDriver,
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
-import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { NodeId } from '@resideo-nest/core';
-import { User } from './models/user.model';
+import {
+  resolvers as scalarResolvers,
+  typeDefs as scalarTypeDefs,
+} from 'graphql-scalars';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
-import { typeDefs as scalarTypeDefs } from 'graphql-scalars';
-import { resolvers as scalarResolvers } from 'graphql-scalars';
 
 @Module(
   {
@@ -26,7 +26,7 @@ import { resolvers as scalarResolvers } from 'graphql-scalars';
           },
           resolvers: {
             ...scalarResolvers,
-            NodeID: NodeId
+            NodeID: NodeId,
           },
         },
       ),

@@ -40,9 +40,9 @@ export class Device
   @Field(
     () => NodeId,
     {
-      name: "userId",
-      description: "Identifier of the user associated with this device"
-    }
+      name: 'userId',
+      description: 'The identifier of the user this device is associated with',
+    },
   )
   userId: string;
 

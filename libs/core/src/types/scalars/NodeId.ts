@@ -39,7 +39,10 @@ export const NodeId = new GraphQLScalarType(
             `[NodeId] Value does not have the appropriate form {${KEY_OBJECT_NAME}: string, ${KEY_ID}: string}`,
           );
         }
-        return toId(objectName.value, id.value);
+        return toId(
+          objectName.value,
+          id.value,
+        );
       }
 
       if (valueNode.kind !== Kind.STRING) {
@@ -54,8 +57,11 @@ export const NodeId = new GraphQLScalarType(
             `[NodeId] Value is not base64 encoded or the wrong form.`,
           );
         }
-        const parts = valueNode.value.split(":");
-        return toId(parts[0], parts[1]);
+        const parts = valueNode.value.split(':');
+        return toId(
+          parts[0],
+          parts[1],
+        );
       }
 
       // It's base64 - assume it's right
@@ -74,7 +80,7 @@ export const NodeId = new GraphQLScalarType(
       if (typeof inputValue !== 'string') {
         throw new TypeError(
           `[NodeId] Value is not string : ${typeof inputValue}`,
-        )
+        );
       }
       if (!isBase64(inputValue)) {
         if (!NODE_ID_REGEX.test(inputValue)) {
@@ -82,8 +88,11 @@ export const NodeId = new GraphQLScalarType(
             `[NodeId] Value is not base64 encoded or the wrong form.`,
           );
         }
-        const parts = inputValue.split(":");
-        return toId(parts[0], parts[1]);
+        const parts = inputValue.split(':');
+        return toId(
+          parts[0],
+          parts[1],
+        );
       }
 
       return inputValue;

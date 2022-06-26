@@ -10,15 +10,17 @@ import { BaseUserDto } from './base.user.dto';
     description: 'Required shape to create a user',
   },
 )
-export class CreateUserDto extends
-  PickType(
+export class CreateUserDto
+  extends PickType(
     BaseUserDto,
     [
+      'username',
+      'password',
       'firstName',
       'lastName',
       'phoneNumber',
       'email',
-      'address'
-    ]
-  ){
+      'address',
+    ],
+  ) {
 }

@@ -7,7 +7,7 @@ import {
   ValueNode,
 } from 'graphql';
 
-export const constrainedString = (
+export const ConstrainedString = (
   name: string,
   description: string,
   constraints: StringConstraints,
@@ -73,4 +73,4 @@ export const constrainedString = (
       },
     },
   );
-}
+};

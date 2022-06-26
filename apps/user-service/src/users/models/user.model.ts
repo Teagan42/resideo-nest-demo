@@ -6,7 +6,9 @@ import {
 import {
   Address,
   EmailAddress,
+  Password,
   PhoneNumber,
+  Username,
 } from '@resideo-nest/core';
 import { Node } from '@resideo-nest/core/types/interfaces/Node';
 
@@ -20,6 +22,24 @@ import { Node } from '@resideo-nest/core/types/interfaces/Node';
 @Directive('@key(fields: "id")')
 export class User
   extends Node {
+  @Field(
+    () => Username,
+    {
+      name: 'username',
+      description: 'The username to authenticate with',
+    },
+  )
+  username: string;
+
+  @Field(
+    () => Password,
+    {
+      name: 'password',
+      description: 'The password to authenticate with',
+    },
+  )
+  password: string;
+
   @Field(
     {
       name: 'firstName',
@@ -39,7 +59,7 @@ export class User
   @Field(
     () => EmailAddress,
     {
-      description: "Email address of the user",
+      description: 'Email address of the user',
       nullable: true,
     },
   )
@@ -48,7 +68,7 @@ export class User
   @Field(
     () => PhoneNumber,
     {
-      description: "Phone number for the user.",
+      description: 'Phone number for the user.',
       nullable: true,
     },
   )
@@ -57,9 +77,9 @@ export class User
   @Field(
     () => Address,
     {
-      description: "Address of the user.",
+      description: 'Address of the user.',
       nullable: true,
-    }
+    },
   )
-  address?: Address
+  address?: Address;
 }
