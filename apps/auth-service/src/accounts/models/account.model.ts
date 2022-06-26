@@ -7,13 +7,15 @@ import {
   Node,
   NodeID,
   Password,
+  Role,
   Username,
 } from '@resideo-nest/core';
+import { Claim } from './claim.model';
 import { User } from './user.model';
 
 @ObjectType(
   {
-    description: "Account entity",
+    description: 'Account entity',
     implements: [
       Node,
     ],
@@ -25,27 +27,27 @@ export class Account
   @Field(
     () => Username,
     {
-      name: "username",
-      description: "Account username associated with this user",
-    }
+      name: 'username',
+      description: 'Account username associated with this user',
+    },
   )
   username: string;
 
   @Field(
     () => Password,
     {
-      name: "password",
-      description: "Account username associated with this user",
-    }
+      name: 'password',
+      description: 'Account username associated with this user',
+    },
   )
   password: string;
 
   @Field(
     () => NodeID,
     {
-      name: "userId",
-      description: "Identifier of the user associated with this account"
-    }
+      name: 'userId',
+      description: 'Identifier of the user associated with this account',
+    },
   )
   userId: string;
 
@@ -57,4 +59,22 @@ export class Account
     },
   )
   user: User;
+
+  @Field(
+    () => Role,
+    {
+      name: 'role',
+      description: 'The role assigned to this account',
+    },
+  )
+  role: Role;
+
+  @Field(
+    () => [Claim],
+    {
+      name: "claims",
+      description: 'The claims associated with this role'
+    }
+  )
+  claims: Claim[];
 }

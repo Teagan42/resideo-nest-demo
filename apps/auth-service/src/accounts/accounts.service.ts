@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { toId } from '@resideo-nest/core';
 import { randomInt } from 'crypto';
 import { Account } from './models/account.model';
-import { CreateAccountDto } from './models/dto/create.account.dto';
+import { CreateAccountDto } from './models/dto/account/create.account.dto';
 
 @Injectable()
 export class AccountsService {

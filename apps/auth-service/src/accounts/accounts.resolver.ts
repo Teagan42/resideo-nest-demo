@@ -9,7 +9,7 @@ import {
 import { NodeID } from '@resideo-nest/core';
 import { AccountsService } from './accounts.service';
 import { Account } from './models/account.model';
-import { CreateAccountDto } from './models/dto/create.account.dto';
+import { CreateAccountDto } from './models/dto/account/create.account.dto';
 import { User } from './models/user.model';
 
 @Resolver((of) => Account)
