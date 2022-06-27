@@ -1,6 +1,6 @@
-export * from './enums';
 export * from './interfaces';
 export * from './scalars';
 export * from './objects';
 export * from './inputObjects';
 export * from './external';
+export * from './InjectionToken';

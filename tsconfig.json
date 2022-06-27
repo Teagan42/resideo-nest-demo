@@ -23,6 +23,12 @@
       ],
       "@resideo-nest/core/*": [
         "libs/core/src/*"
+      ],
+      "@resideo-nest/auth": [
+        "libs/auth/src"
+      ],
+      "@resideo-nest/auth-plugin/*": [
+        "libs/auth/src/*"
       ]
     }
   }
