@@ -23,13 +23,20 @@ export class UsersResolver {
     () => [User],
     {
       name: 'allUsers',
+      description: 'Returns all users in the store'
     },
   )
   getAllUsers(): User[] {
     return this.usersService.all();
   }
 
-  @Query((returns) => User)
+  @Query(
+    () => User,
+    {
+      name: 'getUserById',
+      description: 'Returns the user with te given id'
+    }
+  )
   getUser(@Args({
                   name: 'id',
                   type: () => NodeId,
@@ -37,7 +44,13 @@ export class UsersResolver {
     return this.usersService.findById(id);
   }
 
-  @Query(() => [User])
+  @Query(
+    () => [User],
+    {
+      name: 'filterUsers',
+      description: 'Returns users matching the filter criteria'
+    }
+  )
   filterUsers(@Args({
                       name: 'criteria',
                       type: () => FilterUserDto,

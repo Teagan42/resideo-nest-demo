@@ -38,6 +38,15 @@ export class Device
   name: string;
 
   @Field(
+    {
+      name: 'temperature',
+      description: 'Temperature reading',
+      nullable: true
+    }
+  )
+  temperature: number;
+
+  @Field(
     () => NodeId,
     {
       name: 'userId',

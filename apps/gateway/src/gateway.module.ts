@@ -29,6 +29,10 @@ import { GatewayService } from './gateway.service';
                     name: 'devices',
                     url: 'http://localhost:3002/graphql',
                   },
+                  {
+                    name: 'claims',
+                    url: 'http://localhost:3003/graphql',
+                  },
                 ],
               },
             ),

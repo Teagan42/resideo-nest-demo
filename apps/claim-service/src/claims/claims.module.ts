@@ -5,14 +5,12 @@ import {
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { NodeId } from '@resideo-nest/core';
+import { ClaimsResolver } from './claims.resolver';
+import { ClaimsService } from './claims.service';
 import {
   resolvers as scalarResolvers,
   typeDefs as scalarTypeDefs,
 } from 'graphql-scalars';
-import { DevicesResolver } from './devices.resolver';
-import { DevicesService } from './devices.service';
-import { User } from './models/user.model';
-import { UsersResolver } from './users.resolver';
 
 @Module(
   {
@@ -30,18 +28,15 @@ import { UsersResolver } from './users.resolver';
           },
           buildSchemaOptions: {
             orphanedTypes: [
-              User,
             ],
           },
         },
       ),
     ],
     providers: [
-      DevicesService,
-      DevicesResolver,
-      UsersResolver,
+      ClaimsService,
+      ClaimsResolver,
     ],
   },
 )
-export class DevicesModule {
-}
+export class ClaimsModule {}

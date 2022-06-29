@@ -23,13 +23,20 @@ export class DevicesResolver {
     () => [Device],
     {
       name: 'allDevices',
+      description: 'Retrieves all devices in store'
     },
   )
   getAllDevices(): Device[] {
     return this.devicesService.all();
   }
 
-  @Query((returns) => Device)
+  @Query(
+    (returns) => Device,
+    {
+      name: "getDeviceById",
+      description: 'Returns the device with the specified id'
+    }
+  )
   getDevice(@Args({
                     name: 'id',
                     type: () => NodeId,

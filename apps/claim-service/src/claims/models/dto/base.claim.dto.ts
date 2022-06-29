@@ -2,18 +2,20 @@ import {
   InputType,
   IntersectionType,
 } from '@nestjs/graphql';
-import { NodeDto } from '@resideo-nest/core';
-import { User } from '../user.model';
+import {
+  NodeDto,
+} from '@resideo-nest/core';
+import { Claim } from '../claim.model';
 
 @InputType(
-  'BaseUserDto',
+  'BaseClaimDto',
   {
     isAbstract: true,
   },
 )
-export class BaseUserDto
+export class BaseClaimDto
   extends IntersectionType(
-    User,
+    Claim,
     NodeDto,
   ) {
 }

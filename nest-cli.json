@@ -38,13 +38,13 @@
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
-    "auth-plugin": {
-      "type": "library",
-      "root": "libs/auth",
-      "entryFile": "index",
-      "sourceRoot": "libs/auth/src",
+    "claim-service": {
+      "type": "application",
+      "root": "apps/claim-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/claim-service/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+        "tsConfigPath": "apps/claim-service/tsconfig.app.json"
       }
     }
   },
@@ -52,5 +52,6 @@
     "webpack": false,
     "tsConfigPath": "tsconfig.json"
   },
-  "monorepo": true
+  "monorepo": true,
+  "sourceRoot": "."
 }
