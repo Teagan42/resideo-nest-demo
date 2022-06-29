@@ -1,16 +1,21 @@
 import {
   Args,
   Mutation,
+  Parent,
   Query,
+  ResolveField,
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
 import {
-  CreateClaimDto,
+  fromId,
+  Node,
   NodeId,
 } from '@resideo-nest/core';
+import { getTypenameFromId } from '@resideo-nest/core/helpers';
 import { ClaimsService } from './claims.service';
 import { Claim } from './models/claim.model';
+import { CreateClaimDto } from './models/dto/create.claim.dto';
 import { FilterClaimDto } from './models/dto/filter.claim.dto';
 
 @Resolver((of) => Claim)
@@ -88,14 +93,14 @@ export class ClaimsResolver {
                )
                .filter(
                  (claim) =>
-                   criteria.grantee
-                   ? claim.grantee === criteria.grantee
+                   criteria.granteeId
+                   ? claim.granteeId === criteria.granteeId
                    : true,
                )
                .filter(
                  (claim) =>
-                   criteria.grantor
-                   ? claim.grantor === criteria.grantor
+                   criteria.grantorId
+                   ? claim.grantorId === criteria.grantorId
                    : true,
                )
                .filter(
@@ -113,6 +118,26 @@ export class ClaimsResolver {
     return this.claimsService.findById(reference.id);
   }
 
+  @ResolveField(
+    () => Node,
+  )
+  grantor(@Parent() claim: Claim): any {
+    return {
+      __typeName: getTypenameFromId(claim.grantorId),
+      id: claim.grantorId
+    }
+  }
+
+  @ResolveField(
+    () => Node,
+  )
+  grantee(@Parent() claim: Claim): any {
+    return {
+      __typeName: getTypenameFromId(claim.granteeId),
+      id: claim.granteeId
+    }
+  }
+
   @Mutation(
     () => Claim,
     {
@@ -125,6 +150,14 @@ export class ClaimsResolver {
       'input',
       { type: () => CreateClaimDto },
     ) input: CreateClaimDto): Promise<Claim> {
-    return new Claim();
+    const claim = Object.assign(
+      new Claim(),
+      input
+    );
+    claim.createdAt = new Date();
+    claim.updatedAt = new Date();
+    claim.grantor = this.grantor(claim);
+    claim.grantee = this.grantee(claim);
+    return claim;
   }
 }

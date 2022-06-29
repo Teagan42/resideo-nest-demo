@@ -26,20 +26,38 @@ export class Claim
   @Field(
     () => NodeId,
     {
-      name: 'grantor',
+      name: 'grantorId',
       description: 'Distinct identifier of the node granting this claim',
     }
   )
-  grantor: string;
+  grantorId: string;
+
+  @Field(
+    () => Node,
+    {
+      name: 'grantor',
+      description: 'The node granting this claim',
+    }
+  )
+  grantor: Node;
 
   @Field(
     () => NodeId,
+    {
+      name: 'granteeId',
+      description: 'Distinct identifier of the node being granted this claim',
+    }
+  )
+  granteeId: string;
+
+  @Field(
+    () => Node,
     {
       name: 'grantee',
       description: 'Distinct identifier of the node being granted this claim',
     }
   )
-  grantee: string;
+  grantee: Node;
 
   @Field(
     () => DateTime,

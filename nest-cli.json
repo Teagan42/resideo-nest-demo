@@ -52,6 +52,5 @@
     "webpack": false,
     "tsConfigPath": "tsconfig.json"
   },
-  "monorepo": true,
-  "sourceRoot": "."
+  "monorepo": false
 }

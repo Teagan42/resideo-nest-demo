@@ -27,7 +27,7 @@ import { UsersService } from './users.service';
           resolvers: {
             ...scalarResolvers,
             NodeID: NodeId,
-          },
+          }
         },
       ),
     ],

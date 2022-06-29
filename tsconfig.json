@@ -23,6 +23,12 @@
       ],
       "@resideo-nest/core/*": [
         "libs/core/src/*"
+      ],
+      "@resideo-nest/user-service": [
+        "apps/user-service/src"
+      ],
+      "@resideo-nest/user-service/*": [
+        "apps/user-service/src/*"
       ]
     }
   }

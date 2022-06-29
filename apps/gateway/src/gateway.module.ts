@@ -40,6 +40,7 @@ import { GatewayService } from './gateway.service';
         },
       ),
     ],
+
     controllers: [GatewayController],
     providers: [GatewayService],
   })

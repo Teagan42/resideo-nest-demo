@@ -18,9 +18,17 @@ export class ClaimsService {
     );
   }
 
-  findByGrantor(): Claim[] {
-    return this.claims;
+  findByGrantor(grantorId: string): Claim[] {
+    return this.claims
+      .filter(
+        (claim) => claim.grantorId === grantorId
+      );
   }
 
-  findByGrant
+  findByGrantee(granteeId: string): Claim[] {
+    return this.claims
+               .filter(
+                 (claim) => claim.granteeId === granteeId
+               );
+  }
 }

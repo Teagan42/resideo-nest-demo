@@ -19,6 +19,8 @@ import {
         {
           driver: ApolloFederationDriver,
           autoSchemaFile: true,
+          debug: true,
+          playground: true,
           typeDefs: {
             ...scalarTypeDefs,
           },
@@ -27,8 +29,6 @@ import {
             NodeID: NodeId,
           },
           buildSchemaOptions: {
-            orphanedTypes: [
-            ],
           },
         },
       ),
