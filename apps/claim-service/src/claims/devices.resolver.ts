@@ -6,22 +6,21 @@ import {
 } from '@nestjs/graphql';
 import { ClaimsService } from './claims.service';
 import { Claim } from './models/claim.model';
+import { Device } from './models/device.model';
 import { User } from './models/user.model';
 
-@Resolver(() => User)
-export class UsersResolver {
+@Resolver(() => Device)
+export class DevicesResolver {
   constructor(
     private readonly claimsService: ClaimsService,
   ) {
   }
 
   @ResolveField(() => [Claim])
-  public issuedClaims(@Parent() user: User): Claim[] {
-    return this.claimsService.findByGrantor(user.id);
-  }
-
-  @ResolveField(() => [Claim])
-  public claims(@Parent() user: User): Claim[] {
-    return this.claimsService.findByGrantee(user.id);
+  public claims(@Parent() device: Device): Claim[] {
+    return this.claimsService.all()
+      .filter(
+        (claim) => claim.subjectId === device.id,
+      )
   }
 }

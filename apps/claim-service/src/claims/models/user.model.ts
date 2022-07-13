@@ -12,7 +12,7 @@ import {
 
 @ObjectType(
   {
-    implements: Node
+    implements: Node,
   }
 )
 @Directive('@extends')

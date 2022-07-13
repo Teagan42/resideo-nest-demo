@@ -7,19 +7,19 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
-import { getResolverTypeFn } from '@nestjs/graphql/dist/decorators/resolvers.utils';
 import {
-  fromId,
+  LoggerService,
   Node,
   NodeId,
-  LoggerService,
 } from '@resideo-nest/core';
 import { getTypenameFromId } from '@resideo-nest/core/helpers';
 import { ClaimsService } from './claims.service';
 import { Claim } from './models/claim.model';
+import { ClaimState } from './models/ClaimState';
 import { CreateClaimDto } from './models/dto/create.claim.dto';
 import { FilterClaimDto } from './models/dto/filter.claim.dto';
-import { SetClaimDto } from "./models/dto/set.claim.dto";
+import { SetClaimDto } from './models/dto/set.claim.dto';
+import { SubjectUnion } from './models/SubjectUnion';
 
 @Resolver((of) => Claim)
 export class ClaimsResolver {
@@ -42,19 +42,55 @@ export class ClaimsResolver {
   }
 
   @Query(
-    (returns) => Claim,
+    (returns) => [Claim],
     {
-      name: 'approveClaim',
-      description: 'Approves the claim with the given id',
+      name: 'pendingClaims',
+      description: 'Gets pending claims for the given node',
     },
   )
-  async approveClaim(@Args(
+  async pendingClaims(@Args(
     'id',
     {
       type: () => NodeId,
     },
-  ) id: string): Promise<Claim> {
-    return this.claimsService.findById(id);
+  ) id: string): Promise<Claim[]> {
+    return this.claimsService.findByGrantee(id)
+      .filter((claim) => claim.state === ClaimState.PENDING);
+  }
+
+  @Query(
+    (returns) => [Claim],
+    {
+      name: 'activeClaims',
+      description: 'Gets active claims for the given node',
+    },
+  )
+  async activeClaims(@Args(
+    'id',
+    {
+      type: () => NodeId,
+    },
+  ) id: string): Promise<Claim[]> {
+    return this.claimsService.findByGrantee(id)
+               .filter((claim) => claim.state === ClaimState.GRANTED);
+  }
+
+  @Query(
+    (returns) => [SubjectUnion],
+    {
+      name: 'claimsOn',
+      description: 'Gets claims for the given subject',
+    },
+  )
+  async claimsOn(@Args(
+    'id',
+    {
+      type: () => NodeId,
+    },
+  ) id: string): Promise<Node[]> {
+    return this.claimsService.all()
+               .filter((claim) => claim.subjectId === id)
+      .map((claim) => claim.grantee);
   }
 
   @Query(
@@ -160,7 +196,7 @@ export class ClaimsResolver {
   }
 
   @ResolveField(
-    () => Node,
+    () => SubjectUnion,
   )
   subjectNode(@Parent() claim: Claim): any {
     if (!claim.subjectId || !claim.subject) {
