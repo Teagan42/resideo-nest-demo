@@ -9,7 +9,6 @@ import { LoggerService } from './logger.service';
 export class LoggerModule {
   public static build(context: string): DynamicModule {
     return {
-      global: true,
       module: LoggerModule,
       providers: [
         LoggerProvider(context),

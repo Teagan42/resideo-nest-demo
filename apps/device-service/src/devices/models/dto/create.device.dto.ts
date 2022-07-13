@@ -1,9 +1,7 @@
 import {
-  Field,
   InputType,
   PickType,
 } from '@nestjs/graphql';
-import { NodeId } from '@resideo-nest/core';
 import { BaseDeviceDto } from './base.device.dto';
 
 @InputType(
@@ -16,16 +14,10 @@ export class CreateDeviceDto
   extends PickType(
     BaseDeviceDto,
     [
+      'id',
       'name',
       'deviceId',
+      'userId',
     ],
   ) {
-  @Field(
-    () => NodeId,
-    {
-      name: 'userId',
-      description: 'Node identifier of the user to assign device to',
-    },
-  )
-  userId: string;
 }

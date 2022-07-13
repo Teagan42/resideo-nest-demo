@@ -1,3 +1,4 @@
+import { UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -5,7 +6,11 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
-import { NodeId } from '@resideo-nest/core';
+import {
+  AuthenticationInterceptor,
+  NodeId,
+  toId,
+} from '@resideo-nest/core';
 import { CreateUserDto } from './models/dto/create.user.dto';
 import { FilterUserDto } from './models/dto/filter.user.dto';
 import { UpdateUserDto } from './models/dto/update.user.dto';
@@ -17,15 +22,41 @@ export class UsersResolver {
   constructor(
     private usersService: UsersService,
   ) {
+    let input = new CreateUserDto();
+    input.email = 'test@123.com';
+    input.phoneNumber = '+17201234567';
+    input.lastName = 'Glenn';
+    input.firstName = 'Teagan';
+    input.password = 'P@55Word1';
+    input.username = 'tglenn';
+    // @ts-ignore
+    input.id = toId(
+      'User',
+      '42',
+    );
+    this.usersService.create(input);
+    input.email = 'test@example.com';
+    input.phoneNumber = '+17201234567';
+    input.lastName = 'Bob';
+    input.firstName = 'Saget';
+    input.password = 'P@55Word1';
+    input.username = 'bword';
+    // @ts-ignore
+    input.id = toId(
+      'User',
+      '101',
+    );
+    this.usersService.create(input);
   }
 
   @Query(
     () => [User],
     {
       name: 'allUsers',
-      description: 'Returns all users in the store'
+      description: 'Returns all users in the store',
     },
   )
+  @UseInterceptors(AuthenticationInterceptor)
   getAllUsers(): User[] {
     return this.usersService.all();
   }
@@ -34,11 +65,12 @@ export class UsersResolver {
     () => User,
     {
       name: 'getUserById',
-      description: 'Returns the user with te given id'
-    }
+      description: 'Returns the user with te given id',
+    },
   )
   getUser(@Args({
                   name: 'id',
+                  description: 'Identifier of the user to retrieve',
                   type: () => NodeId,
                 }) id: string): User {
     return this.usersService.findById(id);
@@ -48,8 +80,8 @@ export class UsersResolver {
     () => [User],
     {
       name: 'filterUsers',
-      description: 'Returns users matching the filter criteria'
-    }
+      description: 'Returns users matching the filter criteria',
+    },
   )
   filterUsers(@Args({
                       name: 'criteria',

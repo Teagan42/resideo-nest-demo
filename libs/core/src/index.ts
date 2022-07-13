@@ -4,3 +4,4 @@ export {
   fromId,
 } from './helpers';
 export * from './common';
+export * from './authentication';

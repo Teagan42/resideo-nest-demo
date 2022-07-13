@@ -11,6 +11,7 @@ import {
   LoggerService,
   Node,
   NodeId,
+  toId,
 } from '@resideo-nest/core';
 import { getTypenameFromId } from '@resideo-nest/core/helpers';
 import { ClaimsService } from './claims.service';
@@ -27,6 +28,50 @@ export class ClaimsResolver {
     private readonly logger: LoggerService,
     private readonly claimsService: ClaimsService,
   ) {
+    let input = new CreateClaimDto();
+    input.action = 'read';
+    input.state = ClaimState.GRANTED;
+    input.grantorId = toId(
+      'User',
+      '42',
+    );
+    input.granteeId = toId(
+      'User',
+      '101',
+    );
+    input.subject = 'Device';
+    input.subjectId = toId(
+      'Device',
+      '1',
+    );
+    input.id = toId(
+      'Claim',
+      '1',
+    );
+    this.createClaim(input)
+        .then();
+    input = new CreateClaimDto();
+    input.action = 'manage';
+    input.state = ClaimState.GRANTED;
+    input.grantorId = toId(
+      'User',
+      '42',
+    );
+    input.granteeId = toId(
+      'User',
+      '42',
+    );
+    input.subject = 'Device';
+    input.subjectId = toId(
+      'Device',
+      '1',
+    );
+    input.id = toId(
+      'Claim',
+      '2',
+    );
+    this.createClaim(input)
+        .then();
   }
 
   @Query(
@@ -37,7 +82,7 @@ export class ClaimsResolver {
     },
   )
   async getAllClaims(): Promise<Claim[]> {
-    this.logger.log("Getting claims");
+    this.logger.log('Getting claims');
     return this.claimsService.all();
   }
 
@@ -55,7 +100,7 @@ export class ClaimsResolver {
     },
   ) id: string): Promise<Claim[]> {
     return this.claimsService.findByGrantee(id)
-      .filter((claim) => claim.state === ClaimState.PENDING);
+               .filter((claim) => claim.state === ClaimState.PENDING);
   }
 
   @Query(
@@ -90,7 +135,7 @@ export class ClaimsResolver {
   ) id: string): Promise<Node[]> {
     return this.claimsService.all()
                .filter((claim) => claim.subjectId === id)
-      .map((claim) => claim.grantee);
+               .map((claim) => claim.grantee);
   }
 
   @Query(
@@ -176,23 +221,29 @@ export class ClaimsResolver {
   }
 
   @ResolveField(
-    () => Node,
+    () => SubjectUnion,
+    {
+      description: 'The node granting this claim',
+    },
   )
   grantor(@Parent() claim: Claim): any {
     return {
       __typeName: getTypenameFromId(claim.grantorId),
-      id: claim.grantorId
-    }
+      id: claim.grantorId,
+    };
   }
 
   @ResolveField(
-    () => Node,
+    () => SubjectUnion,
+    {
+      description: 'The node being granted this claim.',
+    },
   )
   grantee(@Parent() claim: Claim): any {
     return {
       __typeName: getTypenameFromId(claim.granteeId),
-      id: claim.granteeId
-    }
+      id: claim.granteeId,
+    };
   }
 
   @ResolveField(
@@ -203,25 +254,28 @@ export class ClaimsResolver {
       return null;
     }
     return {
-      __typeName: claim.subject,
-      id: claim.subjectId
-    }
+      __typeName: getTypenameFromId(claim.subjectId),
+      id: claim.subjectId,
+    };
   }
 
   @Mutation(
     () => Claim,
     {
-      name: "setClaim",
-      description: "Set a claim state"
-    }
+      name: 'setClaim',
+      description: 'Set a claim state',
+    },
   )
   async setClaim(
     @Args(
       'input',
-      {type: () => SetClaimDto}
-    ) input: SetClaimDto
+      { type: () => SetClaimDto },
+    ) input: SetClaimDto,
   ): Promise<Claim> {
-    return this.claimsService.setState(input.id, input.state);
+    return this.claimsService.setState(
+      input.id,
+      input.state,
+    );
   }
 
   @Mutation(
@@ -236,11 +290,10 @@ export class ClaimsResolver {
       'input',
       { type: () => CreateClaimDto },
     ) input: CreateClaimDto): Promise<Claim> {
+    input.grantor = this.grantor(input);
+    input.grantee = this.grantee(input);
+    input.subjectNode = this.subjectNode(input);
     const claim = this.claimsService.create(input);
-    claim.grantor = this.grantor(claim);
-    claim.grantee = this.grantee(claim);
-    claim.subjectNode = this.subjectNode(claim);
-    this.logger.log(claim);
     return claim;
   }
 }

@@ -9,10 +9,12 @@ import { LOGGER_CONTEXT } from './logger.provider';
 
 @Injectable(
   {
-    scope: Scope.TRANSIENT
-  }
+    scope: Scope.TRANSIENT,
+  },
 )
-export class LoggerService extends ConsoleLogger implements LoggingService {
+export class LoggerService
+  extends ConsoleLogger
+  implements LoggingService {
   constructor(
     @Inject(LOGGER_CONTEXT) loggerContext: string,
   ) {
@@ -24,8 +26,14 @@ export class LoggerService extends ConsoleLogger implements LoggingService {
     ...optionalParams
   ) {
     super.log(
-      typeof message === "string" ? message : JSON.stringify(message),
-      ...optionalParams
+      typeof message === 'string'
+      ? message
+      : JSON.stringify(
+        message,
+        null,
+        2,
+      ),
+      ...optionalParams,
     );
   }
 
@@ -34,8 +42,10 @@ export class LoggerService extends ConsoleLogger implements LoggingService {
     ...optionalParams
   ) {
     super.error(
-      typeof message === "string" ? message : JSON.stringify(message),
-      ...optionalParams
+      typeof message === 'string'
+      ? message
+      : JSON.stringify(message),
+      ...optionalParams,
     );
   }
 
@@ -44,8 +54,10 @@ export class LoggerService extends ConsoleLogger implements LoggingService {
     ...optionalParams
   ) {
     super.warn(
-      typeof message === "string" ? message : JSON.stringify(message),
-      ...optionalParams
+      typeof message === 'string'
+      ? message
+      : JSON.stringify(message),
+      ...optionalParams,
     );
   }
 
@@ -54,8 +66,14 @@ export class LoggerService extends ConsoleLogger implements LoggingService {
     ...optionalParams
   ) {
     super.debug(
-      typeof message === "string" ? message : JSON.stringify(message),
-      ...optionalParams
+      typeof message === 'string'
+      ? message
+      : JSON.stringify(message),
+      ...optionalParams,
     );
+  }
+
+  setContext(context: string) {
+    super.setContext(`${super.context}::${context}`);
   }
 }

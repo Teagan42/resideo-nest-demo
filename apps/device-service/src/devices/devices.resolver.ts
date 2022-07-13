@@ -1,3 +1,4 @@
+import { UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -6,7 +7,11 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { NodeId } from '@resideo-nest/core';
+import {
+  AuthenticationInterceptor,
+  NodeId,
+  toId,
+} from '@resideo-nest/core';
 import { DevicesService } from './devices.service';
 import { Device } from './models/device.model';
 import { CreateDeviceDto } from './models/dto/create.device.dto';
@@ -17,13 +22,25 @@ export class DevicesResolver {
   constructor(
     private devicesService: DevicesService,
   ) {
+    const input = new CreateDeviceDto();
+    input.name = 'Teagan\'s Thermostat';
+    input.userId = toId(
+      'User',
+      '42',
+    );
+    input.deviceId = '00:11:22:33:44:55';
+    input.id = toId(
+      'Device',
+      '1',
+    );
+    this.devicesService.create(input);
   }
 
   @Query(
     () => [Device],
     {
       name: 'allDevices',
-      description: 'Retrieves all devices in store'
+      description: 'Retrieves all devices in store',
     },
   )
   getAllDevices(): Device[] {
@@ -33,12 +50,14 @@ export class DevicesResolver {
   @Query(
     (returns) => Device,
     {
-      name: "getDeviceById",
-      description: 'Returns the device with the specified id'
-    }
+      name: 'getDeviceById',
+      description: 'Returns the device with the specified id',
+    },
   )
+  @UseInterceptors(AuthenticationInterceptor)
   getDevice(@Args({
                     name: 'id',
+                    description: 'The identifier of the device to retrieve',
                     type: () => NodeId,
                   }) id: string): Device {
     return this.devicesService.findById(id);
@@ -59,6 +78,7 @@ export class DevicesResolver {
       description: 'Create a new Device',
     },
   )
+  @UseInterceptors(AuthenticationInterceptor)
   async createDevice(@Args(
     'input',
     { type: () => CreateDeviceDto },

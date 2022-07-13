@@ -1,48 +1,37 @@
-import { IntrospectAndCompose } from '@apollo/gateway';
 import {
   ApolloGatewayDriver,
   ApolloGatewayDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { GatewayController } from './gateway.controller';
+import {
+  LoggerModule,
+  toId,
+} from '@resideo-nest/core';
+import { ContextModule } from './context/context.module';
 import { GatewayService } from './gateway.service';
 
 @Module(
   {
     imports: [
-      GraphQLModule.forRoot<ApolloGatewayDriverConfig>(
+      LoggerModule.build('Application'),
+      GraphQLModule.forRootAsync<ApolloGatewayDriverConfig>(
         {
           driver: ApolloGatewayDriver,
-          server: {},
-          gateway: {
-            __exposeQueryPlanExperimental: true,
-            supergraphSdl: new IntrospectAndCompose(
-              {
-                pollIntervalInMs: 1500,
-                subgraphs: [
-                  {
-                    name: 'users',
-                    url: 'http://localhost:3001/graphql',
-                  },
-                  {
-                    name: 'devices',
-                    url: 'http://localhost:3002/graphql',
-                  },
-                  {
-                    name: 'claims',
-                    url: 'http://localhost:3003/graphql',
-                  },
-                ],
-              },
-            ),
-          },
+          imports: [
+            ContextModule.register(toId(
+              'User',
+              '42',
+            )),
+            LoggerModule.build('Gateway'),
+          ],
+          useClass: GatewayService,
         },
       ),
     ],
-
-    controllers: [GatewayController],
-    providers: [GatewayService],
+    exports: [
+      GraphQLModule,
+    ],
   })
 export class GatewayModule {
 }

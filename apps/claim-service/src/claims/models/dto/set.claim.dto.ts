@@ -1,10 +1,7 @@
 import {
   InputType,
-  IntersectionType,
-  PartialType,
   PickType,
 } from '@nestjs/graphql';
-import { Claim } from '../claim.model';
 import { BaseClaimDto } from './base.claim.dto';
 
 @InputType(
@@ -14,12 +11,11 @@ import { BaseClaimDto } from './base.claim.dto';
   },
 )
 export class SetClaimDto
-  extends
-    PickType(
-      BaseClaimDto,
-      [
-        'id',
-        'state',
-      ],
+  extends PickType(
+    BaseClaimDto,
+    [
+      'id',
+      'state',
+    ],
   ) {
 }

@@ -4,20 +4,21 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  NodeId,
-  Node,
   DateTime,
+  Node,
+  NodeId,
 } from '@resideo-nest/core';
 import { Device } from './device.model';
 
 @ObjectType(
   {
-    implements: Node
-  }
+    implements: Node,
+  },
 )
 @Directive('@extends')
 @Directive('@key(fields: "id")')
-export class User extends Node {
+export class User
+  extends Node {
   @Field(
     () => NodeId,
   )

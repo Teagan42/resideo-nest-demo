@@ -13,22 +13,28 @@ export class ClaimsService {
   private claims: Claim[] = [];
 
   constructor(
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
   ) {
   }
 
   all(): Claim[] {
-    this.logger.log("all claims", this.claims);
+    this.logger.log(
+      'all claims',
+      this.claims,
+    );
     return this.claims;
   }
 
   findById(id: string): Claim {
     return this.claims.find(
-      (claim) => claim.id === id
+      (claim) => claim.id === id,
     );
   }
 
-  setState(id: string, state: ClaimState): Claim {
+  setState(
+    id: string,
+    state: ClaimState,
+  ): Claim {
     const claim = this.findById(id);
     claim.state = state;
     return claim;
@@ -36,15 +42,15 @@ export class ClaimsService {
 
   findByGrantor(grantorId: string): Claim[] {
     return this.claims
-      .filter(
-        (claim) => claim.grantorId === grantorId
-      );
+               .filter(
+                 (claim) => claim.grantorId === grantorId,
+               );
   }
 
   findByGrantee(granteeId: string): Claim[] {
     return this.claims
                .filter(
-                 (claim) => claim.granteeId === granteeId
+                 (claim) => claim.granteeId === granteeId,
                );
   }
 
@@ -53,13 +59,19 @@ export class ClaimsService {
   ): Claim {
     const claim = Object.assign(
       new Claim(),
-      input
+      input,
     );
-    claim.id = toId("Claim", randomInt(1000).toString());
+    claim.id = toId(
+      'Claim',
+      randomInt(1000)
+        .toString(),
+    );
     claim.createdAt = new Date();
     claim.updatedAt = new Date();
-    claim.grantorId = input.grantorId
-    claim.granteeId = input.granteeId
+    claim.grantorId = input.grantorId;
+    claim.granteeId = input.granteeId;
+    claim.subjectId = input.subjectId;
+    claim.subject = input.subject;
     this.claims.push(claim);
     return claim;
   }

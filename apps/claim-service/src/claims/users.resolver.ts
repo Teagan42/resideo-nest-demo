@@ -2,7 +2,6 @@ import {
   Parent,
   ResolveField,
   Resolver,
-  ResolveReference,
 } from '@nestjs/graphql';
 import { ClaimsService } from './claims.service';
 import { Claim } from './models/claim.model';

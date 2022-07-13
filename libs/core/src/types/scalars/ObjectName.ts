@@ -2,5 +2,5 @@ import { GraphQLNameString } from '@resideo-nest/core/types/scalars/GraphQLNameS
 
 export const ObjectName = GraphQLNameString(
   'ObjectName',
-  "object"
+  'object',
 );

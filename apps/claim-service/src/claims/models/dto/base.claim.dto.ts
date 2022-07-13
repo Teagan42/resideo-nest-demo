@@ -2,9 +2,7 @@ import {
   InputType,
   IntersectionType,
 } from '@nestjs/graphql';
-import {
-  NodeDto,
-} from '@resideo-nest/core';
+import { NodeDto } from '@resideo-nest/core';
 import { Claim } from '../claim.model';
 
 @InputType(

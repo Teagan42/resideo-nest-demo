@@ -1,4 +1,5 @@
 import {
+  base,
   isBase64,
   toId,
 } from '@resideo-nest/core/helpers';
@@ -76,6 +77,10 @@ export const NodeId = new GraphQLScalarType(
             `[NodeId] Value does not have the appropriate form {${KEY_OBJECT_NAME}: string, ${KEY_ID}: string}`,
           );
         }
+        return toId(
+          objectName,
+          id,
+        );
       }
       if (typeof inputValue !== 'string') {
         throw new TypeError(
@@ -88,17 +93,27 @@ export const NodeId = new GraphQLScalarType(
             `[NodeId] Value is not base64 encoded or the wrong form.`,
           );
         }
-        const parts = inputValue.split(':');
-        return toId(
-          parts[0],
-          parts[1],
-        );
+        return base(inputValue);
       }
 
       return inputValue;
     },
     serialize: (outputValue: unknown): string => {
-      return outputValue as string;
+      if (typeof outputValue === 'string') {
+        if (!isBase64(outputValue)) {
+          return base(outputValue);
+        }
+        return outputValue;
+      }
+      if (typeof outputValue !== 'object') {
+        throw new TypeError(
+          `[NodeId] Value does not have the appropriate form {${KEY_OBJECT_NAME}: string, ${KEY_ID}: string}`,
+        );
+      }
+      return toId(
+        outputValue[KEY_OBJECT_NAME],
+        outputValue[KEY_ID],
+      );
     },
   },
 );

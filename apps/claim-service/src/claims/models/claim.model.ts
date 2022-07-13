@@ -3,23 +3,22 @@ import {
   Field,
   ObjectType,
 } from '@nestjs/graphql';
-import { GqlTypeReference } from '@nestjs/graphql/dist/interfaces/return-type-func.interface';
 import {
   DateTime,
   FieldName,
-  NodeId,
   Node,
+  NodeId,
   ObjectName,
 } from '@resideo-nest/core';
 import { ClaimState } from './ClaimState';
-import { SubjectUnion } from "./SubjectUnion";
+import { SubjectUnion } from './SubjectUnion';
 
 @ObjectType(
   {
     description: 'Permission claim',
     implements: [
-      Node
-    ]
+      Node,
+    ],
   },
 )
 @Directive('@key(fields: "id")')
@@ -30,7 +29,7 @@ export class Claim
     {
       name: 'grantorId',
       description: 'Distinct identifier of the node granting this claim',
-    }
+    },
   )
   grantorId: string;
 
@@ -39,7 +38,7 @@ export class Claim
     {
       name: 'grantor',
       description: 'The node granting this claim',
-    }
+    },
   )
   grantor: Node;
 
@@ -48,7 +47,7 @@ export class Claim
     {
       name: 'granteeId',
       description: 'Distinct identifier of the node being granted this claim',
-    }
+    },
   )
   granteeId: string;
 
@@ -57,7 +56,7 @@ export class Claim
     {
       name: 'grantee',
       description: 'Distinct identifier of the node being granted this claim',
-    }
+    },
   )
   grantee: Node;
 
@@ -67,15 +66,15 @@ export class Claim
       name: 'expiresAt',
       description: 'The point in time at which this claim is no longer valid, if null then it does not expire',
       nullable: true,
-    }
+    },
   )
   expiresAt?: Date;
 
   @Field(
     {
       name: 'action',
-      description: 'The action that is granted by this claim'
-    }
+      description: 'The action that is granted by this claim',
+    },
   )
   action: string;
 
@@ -84,8 +83,8 @@ export class Claim
     {
       name: 'subject',
       description: 'The name of the object subject to this claim, if null claim is global',
-      nullable: true
-    }
+      nullable: true,
+    },
   )
   subject?: string;
 
@@ -95,7 +94,7 @@ export class Claim
       name: 'subjectId',
       description: 'The specific subject identified by this identifier',
       nullable: true,
-    }
+    },
   )
   subjectId?: string;
 
@@ -105,7 +104,7 @@ export class Claim
       name: 'subjectNode',
       description: 'The node identified by the subject and id',
       nullable: true,
-    }
+    },
   )
   subjectNode?: Node;
 
@@ -114,8 +113,8 @@ export class Claim
     {
       name: 'field',
       description: 'The name of the field belonging to the subject to this claim, if null claim is object-level',
-      nullable: true
-    }
+      nullable: true,
+    },
   )
   field?: string;
 
@@ -125,7 +124,7 @@ export class Claim
       name: 'state',
       description: 'The current state of this claim.',
       defaultValue: ClaimState.PENDING,
-    }
+    },
   )
   state: ClaimState;
 }

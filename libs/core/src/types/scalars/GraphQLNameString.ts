@@ -1,9 +1,9 @@
 import {
+  assertValidName as assertValidTypeName,
   GraphQLError,
   GraphQLScalarType,
   Kind,
   ValueNode,
-  assertValidName as assertValidTypeName
 } from 'graphql';
 
 export const GraphQLNameString = (
@@ -56,5 +56,5 @@ export const GraphQLNameString = (
         return outputValue as string;
       },
     },
-  )
+  );
 };

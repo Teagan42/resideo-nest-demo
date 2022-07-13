@@ -46,7 +46,6 @@ export const ConstrainedString = (
   const symbolDescription = `contains at least ${constraints.minSymbols} symbols`;
   const allowedSymbolDescription = `consists of only alpha-number characters or ${constraints.allowedSymbols}`;
 
-
   return new GraphQLScalarType(
     {
       name: name,

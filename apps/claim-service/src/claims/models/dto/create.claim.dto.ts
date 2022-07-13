@@ -4,7 +4,6 @@ import {
   PartialType,
   PickType,
 } from '@nestjs/graphql';
-import { Claim } from '../claim.model';
 import { BaseClaimDto } from './base.claim.dto';
 
 @InputType(
@@ -31,9 +30,9 @@ export class CreateClaimDto
           'subject',
           'subjectId',
           'field',
-          'expiresAt'
-          ]
-      )
-    )
+          'expiresAt',
+        ],
+      ),
+    ),
   ) {
 }

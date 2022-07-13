@@ -13,7 +13,7 @@ export class UsersService {
   private users: User[] = [];
 
   constructor(
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
   ) {
   }
 
@@ -32,13 +32,14 @@ export class UsersService {
     );
     result.createdAt = new Date();
     result.updatedAt = new Date();
-    result.id = toId(
-      'User',
-      randomInt(1000)
-        .toString(),
-    );
+    if (!result.id) {
+      result.id = toId(
+        'User',
+        randomInt(1000)
+          .toString(),
+      );
+    }
     this.users.push(result);
-    this.logger.log(result);
     return result;
   }
 

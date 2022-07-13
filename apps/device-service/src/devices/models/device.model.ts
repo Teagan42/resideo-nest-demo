@@ -12,7 +12,7 @@ import { User } from './user.model';
 
 @ObjectType(
   {
-    description: "Represents a smart device",
+    description: 'Represents a smart device',
     implements: [
       Node,
     ],
@@ -42,8 +42,8 @@ export class Device
     {
       name: 'temperature',
       description: 'Temperature reading',
-      nullable: true
-    }
+      nullable: true,
+    },
   )
   temperature: number;
 
