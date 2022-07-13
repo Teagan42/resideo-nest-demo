@@ -1,10 +1,10 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum ClaimState {
-  PENDING,
-  GRANTED,
-  EXPIRED,
-  REVOKED
+  PENDING = "PENDING",
+  GRANTED = "GRANTED",
+  EXPIRED = "EXPIRED",
+  REVOKED = "REVOKED"
 }
 
 registerEnumType(

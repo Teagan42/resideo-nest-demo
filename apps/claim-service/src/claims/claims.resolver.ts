@@ -7,20 +7,24 @@ import {
   Resolver,
   ResolveReference,
 } from '@nestjs/graphql';
+import { getResolverTypeFn } from '@nestjs/graphql/dist/decorators/resolvers.utils';
 import {
   fromId,
   Node,
   NodeId,
+  LoggerService,
 } from '@resideo-nest/core';
 import { getTypenameFromId } from '@resideo-nest/core/helpers';
 import { ClaimsService } from './claims.service';
 import { Claim } from './models/claim.model';
 import { CreateClaimDto } from './models/dto/create.claim.dto';
 import { FilterClaimDto } from './models/dto/filter.claim.dto';
+import { SetClaimDto } from "./models/dto/set.claim.dto";
 
 @Resolver((of) => Claim)
 export class ClaimsResolver {
   constructor(
+    private readonly logger: LoggerService,
     private readonly claimsService: ClaimsService,
   ) {
   }
@@ -33,7 +37,24 @@ export class ClaimsResolver {
     },
   )
   async getAllClaims(): Promise<Claim[]> {
+    this.logger.log("Getting claims");
     return this.claimsService.all();
+  }
+
+  @Query(
+    (returns) => Claim,
+    {
+      name: 'approveClaim',
+      description: 'Approves the claim with the given id',
+    },
+  )
+  async approveClaim(@Args(
+    'id',
+    {
+      type: () => NodeId,
+    },
+  ) id: string): Promise<Claim> {
+    return this.claimsService.findById(id);
   }
 
   @Query(
@@ -138,6 +159,35 @@ export class ClaimsResolver {
     }
   }
 
+  @ResolveField(
+    () => Node,
+  )
+  subjectNode(@Parent() claim: Claim): any {
+    if (!claim.subjectId || !claim.subject) {
+      return null;
+    }
+    return {
+      __typeName: claim.subject,
+      id: claim.subjectId
+    }
+  }
+
+  @Mutation(
+    () => Claim,
+    {
+      name: "setClaim",
+      description: "Set a claim state"
+    }
+  )
+  async setClaim(
+    @Args(
+      'input',
+      {type: () => SetClaimDto}
+    ) input: SetClaimDto
+  ): Promise<Claim> {
+    return this.claimsService.setState(input.id, input.state);
+  }
+
   @Mutation(
     () => Claim,
     {
@@ -150,14 +200,11 @@ export class ClaimsResolver {
       'input',
       { type: () => CreateClaimDto },
     ) input: CreateClaimDto): Promise<Claim> {
-    const claim = Object.assign(
-      new Claim(),
-      input
-    );
-    claim.createdAt = new Date();
-    claim.updatedAt = new Date();
+    const claim = this.claimsService.create(input);
     claim.grantor = this.grantor(claim);
     claim.grantee = this.grantee(claim);
+    claim.subjectNode = this.subjectNode(claim);
+    this.logger.log(claim);
     return claim;
   }
 }

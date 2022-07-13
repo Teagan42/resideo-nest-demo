@@ -29,15 +29,6 @@
         "tsConfigPath": "apps/device-service/tsconfig.app.json"
       }
     },
-    "gateway": {
-      "type": "application",
-      "root": "apps/gateway",
-      "entryFile": "main",
-      "sourceRoot": "apps/gateway/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/gateway/tsconfig.app.json"
-      }
-    },
     "claim-service": {
       "type": "application",
       "root": "apps/claim-service",
@@ -45,6 +36,15 @@
       "sourceRoot": "apps/claim-service/src",
       "compilerOptions": {
         "tsConfigPath": "apps/claim-service/tsconfig.app.json"
+      }
+    },
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     }
   },

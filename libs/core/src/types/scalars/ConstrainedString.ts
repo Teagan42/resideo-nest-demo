@@ -41,10 +41,20 @@ export const ConstrainedString = (
     }
   };
 
+  const lengthDescription = `is between ${constraints.minLength} and ${constraints.maxLength} characters`;
+  const numberDescription = `contains at least ${constraints.minDigits} numbers`;
+  const symbolDescription = `contains at least ${constraints.minSymbols} symbols`;
+  const allowedSymbolDescription = `consists of only alpha-number characters or ${constraints.allowedSymbols}`;
+
+
   return new GraphQLScalarType(
     {
       name: name,
-      description: description,
+      description: `${description}\n that` +
+                   `* ${lengthDescription}\n` +
+                   `* ${numberDescription}\n` +
+                   `* ${symbolDescription}\n` +
+                   `* ${allowedSymbolDescription}`,
       parseLiteral: (
         valueNode: ValueNode,
       ): string => {

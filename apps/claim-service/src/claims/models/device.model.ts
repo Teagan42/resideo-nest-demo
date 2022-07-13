@@ -3,12 +3,12 @@ import {
   Field,
   ObjectType,
 } from '@nestjs/graphql';
+import { Claim } from './claim.model';
 import {
   NodeId,
   Node,
   DateTime,
 } from '@resideo-nest/core';
-import { Device } from './device.model';
 
 @ObjectType(
   {
@@ -17,7 +17,7 @@ import { Device } from './device.model';
 )
 @Directive('@extends')
 @Directive('@key(fields: "id")')
-export class User extends Node {
+export class Device extends Node {
   @Field(
     () => NodeId,
   )
@@ -37,11 +37,20 @@ export class User extends Node {
   updatedAt: Date;
 
   @Field(
-    () => [Device],
+    () => [Claim],
     {
-      description: 'Devices associated with this user',
+      description: 'Claims issued by this device',
       nullable: true,
     },
   )
-  devices?: Device[];
+  issuedClaims?: Claim[];
+
+  @Field(
+    () => [Claim],
+    {
+      description: 'Claims issued to this device',
+      nullable: true,
+    },
+  )
+  claims?: Claim[];
 }

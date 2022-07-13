@@ -1,2 +1,2 @@
 #!/bin/zsh
-nest build --debug --watch claim-service
+nest start --debug --watch claim-service

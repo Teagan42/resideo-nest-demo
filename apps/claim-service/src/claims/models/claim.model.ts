@@ -3,6 +3,7 @@ import {
   Field,
   ObjectType,
 } from '@nestjs/graphql';
+import { GqlTypeReference } from '@nestjs/graphql/dist/interfaces/return-type-func.interface';
 import {
   DateTime,
   FieldName,
@@ -11,6 +12,7 @@ import {
   ObjectName,
 } from '@resideo-nest/core';
 import { ClaimState } from './ClaimState';
+import { SubjectUnion } from "./SubjectUnion";
 
 @ObjectType(
   {
@@ -33,7 +35,7 @@ export class Claim
   grantorId: string;
 
   @Field(
-    () => Node,
+    () => SubjectUnion,
     {
       name: 'grantor',
       description: 'The node granting this claim',
@@ -51,7 +53,7 @@ export class Claim
   granteeId: string;
 
   @Field(
-    () => Node,
+    () => SubjectUnion,
     {
       name: 'grantee',
       description: 'Distinct identifier of the node being granted this claim',
@@ -91,10 +93,21 @@ export class Claim
     () => NodeId,
     {
       name: 'subjectId',
-      description: 'The specific subject identified by this identifier'
+      description: 'The specific subject identified by this identifier',
+      nullable: true,
     }
   )
   subjectId?: string;
+
+  @Field(
+    () => SubjectUnion,
+    {
+      name: 'subjectNode',
+      description: 'The node identified by the subject and id',
+      nullable: true,
+    }
+  )
+  subjectNode?: Node;
 
   @Field(
     () => FieldName,

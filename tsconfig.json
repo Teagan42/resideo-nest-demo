@@ -29,6 +29,12 @@
       ],
       "@resideo-nest/user-service/*": [
         "apps/user-service/src/*"
+      ],
+      "@resideo-nest/device-service": [
+        "apps/device-service/src"
+      ],
+      "@resideo-nest/device-service/*": [
+        "apps/device-service/src/*"
       ]
     }
   }

@@ -12,6 +12,7 @@ import { User } from './user.model';
 
 @ObjectType(
   {
+    description: "Represents a smart device",
     implements: [
       Node,
     ],

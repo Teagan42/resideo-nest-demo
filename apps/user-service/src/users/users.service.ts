@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { toId } from '@resideo-nest/core';
+import {
+  LoggerService,
+  toId,
+} from '@resideo-nest/core';
 import { randomInt } from 'crypto';
 import { CreateUserDto } from './models/dto/create.user.dto';
 import { UpdateUserDto } from './models/dto/update.user.dto';
@@ -9,7 +12,9 @@ import { User } from './models/user.model';
 export class UsersService {
   private users: User[] = [];
 
-  constructor() {
+  constructor(
+    private readonly logger: LoggerService
+  ) {
   }
 
   all(): User[] {
@@ -33,6 +38,7 @@ export class UsersService {
         .toString(),
     );
     this.users.push(result);
+    this.logger.log(result);
     return result;
   }
 
