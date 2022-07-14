@@ -1,43 +1,18 @@
 import {
   IntrospectAndCompose,
-  RemoteGraphQLDataSource,
 } from '@apollo/gateway';
 import { ApolloGatewayDriverConfig } from '@nestjs/apollo';
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { GqlOptionsFactory } from '@nestjs/graphql';
 import { LoggerService } from '@resideo-nest/core';
+import {
+  CONTEXT_REMOTE,
+  ContextRemoteDataSource,
+} from './context/context.remote';
 import { ContextService } from './context/context.service';
-
-class AuthenticatedDataSource
-  extends RemoteGraphQLDataSource {
-
-  constructor(
-    private readonly contextService: ContextService
-
-  ) {
-    super();
-  }
-
-  async willSendRequest(
-    {
-      request,
-      context,
-    },
-  ) {
-    const ctx = await this.contextService.retrieveUserClaims();
-    request.http.headers.set(
-      'user-id',
-       ctx.userId || context.userId,
-    );
-    request.http.headers.set(
-      'claims',
-      ctx.claims || context.claims || '',
-    );
-    if (request.http.headers['m2m'] !== 'true') {
-      return;
-    }
-  }
-}
 
 @Injectable()
 export class GatewayService
@@ -45,8 +20,16 @@ export class GatewayService
   constructor(
     private readonly logger: LoggerService,
     private readonly contextService: ContextService,
+    @Inject(CONTEXT_REMOTE) private readonly contextRemoteFactory: (url: string) => ContextRemoteDataSource
   ) {
     this.logger.log('Inside Gateway Service');
+  }
+
+  private getRemoteDataSource(
+    name: string,
+    url: string
+  ): ContextRemoteDataSource {
+    return this.contextRemoteFactory(url);
   }
 
   async createGqlOptions(): Promise<Omit<ApolloGatewayDriverConfig, 'driver'>> {
@@ -57,13 +40,7 @@ export class GatewayService
       },
       gateway: {
         __exposeQueryPlanExperimental: true,
-        buildService({
-                       name,
-                       url,
-                     }) {
-          (new LoggerService("BuildService")).log(`Creating data source for ${name} ${url}`);
-          return new AuthenticatedDataSource( this.contexService, { url });
-        },
+        buildService: ({name, url}) => this.getRemoteDataSource(name, url),
         supergraphSdl: new IntrospectAndCompose(
           {
             pollIntervalInMs: 1500,

@@ -59,7 +59,7 @@ import { UsersResolver } from './users.resolver';
         provide: APP_INTERCEPTOR,
         useClass: AuthenticationInterceptor,
       },
-      // AuthenticationPlugin,
+      AuthenticationPlugin,
     ],
   },
 )

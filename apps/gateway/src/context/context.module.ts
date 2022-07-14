@@ -9,6 +9,10 @@ import {
   CONTEXT_DATA,
   ContextData,
 } from './context.data';
+import {
+  CONTEXT_REMOTE,
+  ContextRemoteDataSourceProvider,
+} from './context.remote';
 import { ContextService } from './context.service';
 
 @Module({})
@@ -26,9 +30,11 @@ export class ContextModule {
           provide: CONTEXT_DATA,
           useValue: contextData,
         },
+        ContextRemoteDataSourceProvider,
         ContextService,
       ],
       exports: [
+        CONTEXT_REMOTE,
         ContextService,
       ],
       global: true,

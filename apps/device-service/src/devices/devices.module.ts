@@ -28,6 +28,8 @@ import { UsersResolver } from './users.resolver';
         {
           driver: ApolloFederationDriver,
           autoSchemaFile: true,
+          debug: true,
+          playground: true,
           typeDefs: {
             ...scalarTypeDefs,
           },
@@ -51,7 +53,7 @@ import { UsersResolver } from './users.resolver';
         provide: APP_INTERCEPTOR,
         useClass: AuthenticationInterceptor,
       },
-      // AuthenticationPlugin,
+      AuthenticationPlugin,
     ],
     exports: [
       LoggerModule,
