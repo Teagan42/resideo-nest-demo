@@ -13,7 +13,6 @@ import {
 } from '@resideo-nest/core';
 import { GatewayService } from './gateway.service';
 import { ContextModule } from './gateway/context.module';
-import {GraphQLRequestModule} from "@golevelup/nestjs-graphql-request";
 
 @Module(
   {

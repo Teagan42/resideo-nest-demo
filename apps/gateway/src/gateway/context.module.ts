@@ -13,8 +13,7 @@ import {
 } from '@resideo-nest/core';
 
 import { RemoteDataSourceFactory } from './context.remote';
-import { ContextService } from './context.service';
-import {GraphQLRequestModule} from "@golevelup/nestjs-graphql-request";
+import { GraphQLRequestModule } from "@golevelup/nestjs-graphql-request";
 
 @Module({})
 export class ContextModule {

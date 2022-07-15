@@ -8,7 +8,7 @@ import {
 } from './context.data';
 import {graphql, GraphQLSchema} from "graphql";
 import { GraphQLClient } from 'graphql-request';
-import {InjectGraphQLClient} from "@golevelup/nestjs-graphql-request";
+import { InjectGraphQLClient } from "@golevelup/nestjs-graphql-request";
 
 @Injectable()
 export class ContextService {
