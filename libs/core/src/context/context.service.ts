@@ -28,12 +28,7 @@ export class ContextService {
   public get userContextData(): UserContextData {
     return this.contextData;
   }
-/*
-curl --request POST \
-    --header 'content-type: application/json' \
-    --url http://localhost:3000/graphql \
-    --data '{"query":"query AllClaims {\n  allClaims {\n    action\n    field\n    granteeId\n    grantorId\n    state\n    subject\n    subjectId\n    id\n  }\n}"}'
- */
+
   public async retrieveUserClaims(): Promise<UserContextData> {
     this.logger.log(`Is loaded? ${this.isLoaded}`);
     if (!this.isLoaded) {

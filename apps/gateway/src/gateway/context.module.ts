@@ -3,14 +3,14 @@ import {
   DynamicModule,
   Module,
 } from '@nestjs/common';
-import { LoggerModule } from '@resideo-nest/core';
-
 import {
   CONTEXT_DATA,
   ContextData,
-} from './context.data';
+  ContextService,
+  LoggerModule,
+} from '@resideo-nest/core';
+
 import { RemoteDataSourceFactory } from './context.remote';
-import { ContextService } from './context.service';
 
 @Module({})
 export class ContextModule {

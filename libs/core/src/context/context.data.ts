@@ -41,7 +41,7 @@ export class ContextData implements UserContextData {
     subjectId: string | null,
     field: string | null,
   ): this {
-    const claim = this.buildClaimString(
+    const claim = ContextData.buildClaimString(
       action,
       subject,
       subjectId,
@@ -56,7 +56,7 @@ export class ContextData implements UserContextData {
     return this;
   }
 
-  private buildClaimString(
+  private static buildClaimString(
     action: string,
     subject: string | null,
     subjectId: string | null,
