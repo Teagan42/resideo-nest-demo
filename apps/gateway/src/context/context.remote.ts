@@ -8,6 +8,7 @@ import {
 import { ModuleRef } from '@nestjs/core';
 import { LoggerService } from '@resideo-nest/core';
 import { ContextService } from './context.service';
+import {base} from "@resideo-nest/core/helpers";
 
 @Injectable()
 export class RemoteDataSourceFactory {
@@ -74,7 +75,9 @@ export class AuthenticatedRemoteDataSource
     );
     request.http.headers.set(
       'claims',
-      context.claims || '',
+      base(context.claims || ''),
     );
+
+    this.logger.log(request.http.headers);
   }
 }

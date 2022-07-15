@@ -127,6 +127,6 @@ export class ContextService {
       this._isBusy = false;
     }
 
-    return this.userContextData;
+    return this.contextData;
   }
 }
