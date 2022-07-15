@@ -1,4 +1,5 @@
 #!/bin/zsh
+npm i
 cd apps
 cd claim-service && npm i && cd ..
 cd device-service && npm i && cd ..

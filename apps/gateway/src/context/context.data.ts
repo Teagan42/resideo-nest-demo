@@ -1,29 +1,20 @@
 import {
   Inject,
-  Injectable,
+  Injectable
 } from '@nestjs/common';
+import {LoggerService} from "@resideo-nest/core";
 
 export const CONTEXT_DATA = Symbol('Container for user context');
 
-export interface UserContextData {
-  userId: string;
-  claims: string[];
-  assignClaim(
-    active: boolean,
-    action: string,
-    subject: string | null,
-    subjectId: string | null,
-    field: string | null,
-  ): this;
-}
-
 @Injectable()
-export class ContextData implements UserContextData {
-  private readonly _claims: Set<string> = new Set<string>();
+export class ContextData {
+  private _claims: string[] = [];
 
   constructor(
+    private readonly logger: LoggerService,
     @Inject(CONTEXT_DATA) private readonly _userId: string,
   ) {
+    this.logger.setContext("ContextData");
   }
 
   get userId(): string {
@@ -31,7 +22,7 @@ export class ContextData implements UserContextData {
   }
 
   get claims(): string[] {
-    return Array.from(this._claims.values());
+    return this._claims;
   }
 
   public assignClaim(
@@ -41,18 +32,24 @@ export class ContextData implements UserContextData {
     subjectId: string | null,
     field: string | null,
   ): this {
+    this.logger.log("Assigning Claim");
     const claim = this.buildClaimString(
       action,
       subject,
       subjectId,
       field,
     );
-    if (!active && this._claims.has(claim)) {
-      this._claims.delete(claim);
+    this.logger.log(`Claim ${claim}`);
+    const claimSet = new Set(this._claims);
+    if (!active) {
+      this.logger.log("Deleting")
+      claimSet.delete(claim);
     } else {
-      this._claims.add(claim);
+      this.logger.log("Adding");
+      claimSet.add(claim);
     }
-
+    this._claims = Array.from(claimSet);
+    this.logger.log(`Claims ${Array.from(this._claims)}`);
     return this;
   }
 

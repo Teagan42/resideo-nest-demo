@@ -3,7 +3,7 @@ import {
   DynamicModule,
   Module,
 } from '@nestjs/common';
-import { LoggerModule } from '@resideo-nest/core';
+import {LoggerModule, toId} from '@resideo-nest/core';
 
 import {
   CONTEXT_DATA,
@@ -11,6 +11,7 @@ import {
 } from './context.data';
 import { RemoteDataSourceFactory } from './context.remote';
 import { ContextService } from './context.service';
+import {GraphQLRequestModule} from "@golevelup/nestjs-graphql-request";
 
 @Module({})
 export class ContextModule {
@@ -21,6 +22,19 @@ export class ContextModule {
       imports: [
         HttpModule,
         LoggerModule.build('Context'),
+        GraphQLRequestModule.forRoot(GraphQLRequestModule, {
+          // Exposes configuration options based on the graphql-request package
+          endpoint: "http://localhost:3000/graphql",
+          options: {
+            headers: {
+              'content-type': 'application/json',
+              'user-id': toId(
+                'User',
+                '42',
+              )
+            },
+          },
+        }),
       ],
       providers: [
         {

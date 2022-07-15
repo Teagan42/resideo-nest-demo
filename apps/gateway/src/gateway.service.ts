@@ -1,4 +1,5 @@
 import {
+  CompositionInfo,
   IntrospectAndCompose,
   ServiceEndpointDefinition,
 } from '@apollo/gateway';
@@ -14,6 +15,8 @@ import {
   RemoteDataSourceFactory,
 } from './context/context.remote';
 import { ContextService } from './context/context.service';
+import {graphql} from "graphql";
+import {SupergraphSdlCompositionInfo} from "@apollo/gateway/dist/config";
 
 @Injectable()
 export class GatewayService
@@ -48,6 +51,11 @@ export class GatewayService
             this.contextService,
             serviceEndPoint
           ),
+        experimental_didUpdateSupergraph: (
+          currentConfig: SupergraphSdlCompositionInfo,
+        ) => {
+          self.contextService.updateSchema(currentConfig.schema);
+        },
         supergraphSdl: new IntrospectAndCompose(
           {
             pollIntervalInMs: 1500,

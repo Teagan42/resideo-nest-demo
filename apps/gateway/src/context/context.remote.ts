@@ -47,16 +47,20 @@ export class AuthenticatedRemoteDataSource
     );
   }
 
+
+
   async willSendRequest(
     {
       request,
       context,
     },
   ) {
+    this.logger.log(`Request: ${request}`);
+    this.logger.log(`Context: ${context}`);
     if (!this.contextService.isBusy && !request.http.headers.has("m2m") && !request?.request?.query?.includes("__ApolloGetServiceDefinition__")) {
       this.logger.log("Retrieving claims");
       const ctx = await this.contextService.retrieveUserClaims();
-      this.logger.log(ctx);
+      this.logger.log(this.contextService.userContextData);
       if (ctx) {
         Object.assign(
           context,

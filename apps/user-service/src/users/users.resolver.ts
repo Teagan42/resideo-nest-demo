@@ -68,7 +68,7 @@ export class UsersResolver {
       description: 'Returns the user with te given id',
     },
   )
-  getUser(@Args({
+  getUserById(@Args({
                   name: 'id',
                   description: 'Identifier of the user to retrieve',
                   type: () => NodeId,
