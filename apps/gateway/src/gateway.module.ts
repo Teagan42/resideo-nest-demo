@@ -2,8 +2,13 @@ import {
   ApolloGatewayDriver,
   ApolloGatewayDriverConfig,
 } from '@nestjs/apollo';
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
+import { ModuleRef } from '@nestjs/core';
+import {
+  GqlOptionsFactory,
+  GraphQLModule,
+} from '@nestjs/graphql';
 import {
   LoggerModule,
   toId,
@@ -19,13 +24,14 @@ import { GatewayService } from './gateway.service';
         {
           driver: ApolloGatewayDriver,
           imports: [
+            HttpModule,
+            LoggerModule.build('Gateway'),
             ContextModule.register(toId(
               'User',
               '42',
             )),
-            LoggerModule.build('Gateway'),
           ],
-          useClass: GatewayService,
+          useClass: GatewayService
         },
       ),
     ],

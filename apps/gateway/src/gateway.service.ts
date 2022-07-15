@@ -1,46 +1,53 @@
 import {
   IntrospectAndCompose,
+  ServiceEndpointDefinition,
 } from '@apollo/gateway';
 import { ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import {
-  Inject,
   Injectable,
+  OnModuleDestroy,
+  OnModuleInit,
 } from '@nestjs/common';
 import { GqlOptionsFactory } from '@nestjs/graphql';
 import { LoggerService } from '@resideo-nest/core';
 import {
-  CONTEXT_REMOTE,
-  ContextRemoteDataSource,
+  RemoteDataSourceFactory,
 } from './context/context.remote';
 import { ContextService } from './context/context.service';
 
 @Injectable()
 export class GatewayService
-  implements GqlOptionsFactory<ApolloGatewayDriverConfig> {
+  implements GqlOptionsFactory<ApolloGatewayDriverConfig>, OnModuleInit, OnModuleDestroy {
+
   constructor(
     private readonly logger: LoggerService,
     private readonly contextService: ContextService,
-    @Inject(CONTEXT_REMOTE) private readonly contextRemoteFactory: (url: string) => ContextRemoteDataSource
+    private readonly remoteDataSourceFactory: RemoteDataSourceFactory,
   ) {
-    this.logger.log('Inside Gateway Service');
+    this.logger.log(`Inside Gateway Service: ${contextService} ${remoteDataSourceFactory}`);
   }
 
-  private getRemoteDataSource(
-    name: string,
-    url: string
-  ): ContextRemoteDataSource {
-    return this.contextRemoteFactory(url);
+  onModuleInit(): any {
+    this.contextService.isLoaded = true;
+  }
+
+  onModuleDestroy(): any {
+    this.contextService.isLoaded = false;
   }
 
   async createGqlOptions(): Promise<Omit<ApolloGatewayDriverConfig, 'driver'>> {
-    this.logger.log('Creating GQL Options');
+    const self = this;
     return {
       server: {
         context: this.contextService.userContextData,
       },
       gateway: {
         __exposeQueryPlanExperimental: true,
-        buildService: ({name, url}) => this.getRemoteDataSource(name, url),
+        buildService: (serviceEndPoint: ServiceEndpointDefinition) =>
+          self.remoteDataSourceFactory.from(
+            this.contextService,
+            serviceEndPoint
+          ),
         supergraphSdl: new IntrospectAndCompose(
           {
             pollIntervalInMs: 1500,

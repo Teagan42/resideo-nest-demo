@@ -15,6 +15,7 @@ export class UsersService {
   constructor(
     private readonly logger: LoggerService,
   ) {
+    this.logger.setContext("UserService");
   }
 
   all(): User[] {

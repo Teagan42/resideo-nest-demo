@@ -16,22 +16,21 @@ export class AuthenticationPlugin
   }
 
   async requestDidStart(context): Promise<GraphQLRequestListener> {
-    const logger = new LoggerService('AuthPlugin');
-    logger.log('Request started');
+    this.logger.resetContext()
+      .withContext("requestDidStart")
+      .log(context);
     return {
       async parsingDidStart(context) {
-        const logger = new LoggerService('AuthPlugin::ParseStart');
-        logger.log('Parsing started');
-        // logger.log(context.request.operationName);
+        this.logger.withContext("ParsingDidStart")
+            .log(context);
       },
       async validationDidStart(context) {
-        const logger = new LoggerService('AuthPlugin::ValidationStart');
-        logger.log('Validation did start');
+        this.logger.withContext("validationDidStart")
+            .log(context);
       },
       async executionDidStart(context) {
-        const logger = new LoggerService('AuthPlugin::ExecStart');
-        logger.log('Execution did start');
-        // logger.log(context.operation);
+        this.logger.withContext("executionDidStart")
+            .log(context);
         return {
           willResolveField({
                              source,
@@ -47,11 +46,12 @@ export class AuthenticationPlugin
         };
       },
       async didResolveOperation(context) {
-        logger.log('Resolved operation');
+        this.logger.withContext("didResolveOperation")
+            .log(context);
       },
       async willSendResponse(context) {
-        logger.log('Will send response');
-        // logger.log(context.request.query);
+        this.logger.withContext("willSendResponse")
+            .log(context);
       },
     };
   }

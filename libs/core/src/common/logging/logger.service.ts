@@ -16,9 +16,14 @@ export class LoggerService
   extends ConsoleLogger
   implements LoggingService {
   constructor(
-    @Inject(LOGGER_CONTEXT) loggerContext: string,
+    @Inject(LOGGER_CONTEXT) rootContext: string,
   ) {
-    super(loggerContext);
+    super(rootContext);
+  }
+
+  withContext(context: string): this {
+    this.setContext(context);
+    return this;
   }
 
   log(
@@ -74,6 +79,11 @@ export class LoggerService
   }
 
   setContext(context: string) {
-    super.setContext(`${super.context}::${context}`);
+    super.setContext(`${this.context}::${context}`);
+  }
+
+  resetContext() {
+    super.resetContext();
+    return this;
   }
 }

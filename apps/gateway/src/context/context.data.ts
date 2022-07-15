@@ -1,15 +1,28 @@
+import {
+  Inject,
+  Injectable,
+} from '@nestjs/common';
+
 export const CONTEXT_DATA = Symbol('Container for user context');
 
 export interface UserContextData {
   userId: string;
-  claims: string;
+  claims: string[];
+  assignClaim(
+    active: boolean,
+    action: string,
+    subject: string | null,
+    subjectId: string | null,
+    field: string | null,
+  ): this;
 }
 
-export class ContextData {
+@Injectable()
+export class ContextData implements UserContextData {
   private readonly _claims: Set<string> = new Set<string>();
 
   constructor(
-    private readonly _userId: string,
+    @Inject(CONTEXT_DATA) private readonly _userId: string,
   ) {
   }
 
@@ -19,13 +32,6 @@ export class ContextData {
 
   get claims(): string[] {
     return Array.from(this._claims.values());
-  }
-
-  userContext(): UserContextData {
-    return {
-      userId: this.userId,
-      claims: this.claims.join(' ') || '',
-    };
   }
 
   public assignClaim(
