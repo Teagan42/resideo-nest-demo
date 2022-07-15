@@ -33,7 +33,7 @@ export class ContextData {
     field: string | null,
   ): this {
     this.logger.log("Assigning Claim");
-    const claim = this.buildClaimString(
+    const claim = ContextData.buildClaimString(
       action,
       subject,
       subjectId,
@@ -53,7 +53,7 @@ export class ContextData {
     return this;
   }
 
-  private buildClaimString(
+  private static buildClaimString(
     action: string,
     subject: string | null,
     subjectId: string | null,

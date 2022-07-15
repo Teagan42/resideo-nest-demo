@@ -10,11 +10,11 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { GqlOptionsFactory } from '@nestjs/graphql';
-import { LoggerService } from '@resideo-nest/core';
 import {
-  RemoteDataSourceFactory,
-} from './context/context.remote';
-import { ContextService } from './context/context.service';
+  LoggerService,
+  ContextService,
+} from '@resideo-nest/core';
+import { RemoteDataSourceFactory } from './gateway/context.remote';
 import {graphql} from "graphql";
 import {SupergraphSdlCompositionInfo} from "@apollo/gateway/dist/config";
 

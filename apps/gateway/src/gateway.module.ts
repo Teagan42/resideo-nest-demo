@@ -4,17 +4,15 @@ import {
 } from '@nestjs/apollo';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
 import {
-  GqlOptionsFactory,
   GraphQLModule,
 } from '@nestjs/graphql';
 import {
   LoggerModule,
   toId,
 } from '@resideo-nest/core';
-import { ContextModule } from './context/context.module';
 import { GatewayService } from './gateway.service';
+import { ContextModule } from './gateway/context.module';
 import {GraphQLRequestModule} from "@golevelup/nestjs-graphql-request";
 
 @Module(

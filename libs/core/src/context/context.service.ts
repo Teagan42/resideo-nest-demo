@@ -1,8 +1,8 @@
-import {HttpService} from '@nestjs/axios';
+import { HttpService } from '@nestjs/axios';
 import {
   Injectable,
 } from '@nestjs/common';
-import {LoggerService} from '@resideo-nest/core';
+import { LoggerService } from '@resideo-nest/core';
 import {
   ContextData,
 } from './context.data';
@@ -62,20 +62,6 @@ export class ContextService {
     @InjectGraphQLClient() private readonly client: GraphQLClient
   ) {
     this.logger.setContext("ContextService");
-    this.httpService.axiosRef.interceptors.request.use(
-      (cfg) => {
-        this.logger.log("Intercept");
-        this.logger.log(cfg);
-        return cfg;
-      }
-    )
-    this.httpService.axiosRef.interceptors.response.use(
-      (res) => {
-        this.logger.log("Intercept");
-        this.logger.log(res);
-        return res;
-      }
-    )
   }
 
   get isBusy(): boolean {

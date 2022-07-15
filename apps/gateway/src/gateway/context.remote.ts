@@ -1,20 +1,20 @@
-import { RemoteGraphQLDataSource } from '@apollo/gateway';
-import { ServiceEndpointDefinition } from '@apollo/gateway/dist/config';
+import {
+  RemoteGraphQLDataSource,
+  ServiceEndpointDefinition,
+} from '@apollo/gateway';
 import {
   Injectable,
-  OnModuleDestroy,
-  OnModuleInit,
 } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
-import { LoggerService } from '@resideo-nest/core';
-import { ContextService } from './context.service';
+import {
+  ContextService,
+  LoggerService,
+} from '@resideo-nest/core';
 import {base} from "@resideo-nest/core/helpers";
 
 @Injectable()
 export class RemoteDataSourceFactory {
   constructor(
     private readonly logger: LoggerService,
-    private readonly moduleRef: ModuleRef,
   ) {
   }
 
@@ -47,8 +47,6 @@ export class AuthenticatedRemoteDataSource
       },
     );
   }
-
-
 
   async willSendRequest(
     {
