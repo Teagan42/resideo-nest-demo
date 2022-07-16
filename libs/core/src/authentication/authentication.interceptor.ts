@@ -27,7 +27,11 @@ export class AuthenticationInterceptor
     this.logger.log(gqlContext.getArgs());
     this.logger.log(debase(gqlContext.getContext().req.headers['claims']));
     return next.handle()
-               .pipe();
+               .pipe()
+      .lift((x) => {
+        this.logger.log(x);
+        return x
+      })
   }
 
 }

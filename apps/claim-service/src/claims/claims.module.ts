@@ -54,10 +54,7 @@ import { UsersResolver } from './users.resolver';
       ClaimsResolver,
       UsersResolver,
       DevicesResolver,
-      {
-        provide: APP_INTERCEPTOR,
-        useClass: AuthenticationInterceptor,
-      },
+      AuthenticationInterceptor,
     ],
   },
 )

@@ -79,11 +79,9 @@ export class ContextService {
   }
 
   public async retrieveUserClaims(): Promise<ContextData> {
-    this.logger.log(`Is loaded? ${this.isLoaded}`);
     if (!this.isLoaded || !this.schema) {
       return this.contextData;
     }
-    this.logger.log(`Query Type ${this.schema.toConfig()}`);
     this._isBusy = true;
     try {
       const res = await this.client.request(
@@ -93,7 +91,6 @@ export class ContextService {
           m2m: "true",
         }
       );
-      this.logger.log(res);
       return res.getUserById.claims.reduce(
         (
           ctx,

@@ -1,4 +1,5 @@
 import {
+  GraphQLDataSourceProcessOptions,
   RemoteGraphQLDataSource,
   ServiceEndpointDefinition,
 } from '@apollo/gateway';
@@ -10,6 +11,7 @@ import {
   LoggerService,
 } from '@resideo-nest/core';
 import {base} from "@resideo-nest/core/helpers";
+import { GraphQLResponse } from 'apollo-server-plugin-base';
 
 @Injectable()
 export class RemoteDataSourceFactory {
@@ -22,6 +24,7 @@ export class RemoteDataSourceFactory {
     contextService: ContextService,
     serviceEndpoint: ServiceEndpointDefinition
   ): AuthenticatedRemoteDataSource {
+    this.logger.log(`Creating Data Source ${serviceEndpoint.name} at ${serviceEndpoint.url}`);
     return new AuthenticatedRemoteDataSource(
       new LoggerService(`RemoteDataSource::${serviceEndpoint.name}`),
       contextService,
@@ -48,18 +51,25 @@ export class AuthenticatedRemoteDataSource
     );
   }
 
-  async willSendRequest(
-    {
-      request,
+  async process(options: GraphQLDataSourceProcessOptions<Record<string, any>>): Promise<GraphQLResponse> {
+    const result = await super.process(options);
+    if (!result.data?._service) {
+      this.logger.log(JSON.stringify(
+        result,
+        null,
+        2
+      ));
+    }
+    return result;
+  }
+
+  async willSendRequest({
+                          request,
       context,
     },
   ) {
-    this.logger.log(`Request: ${request}`);
-    this.logger.log(`Context: ${context}`);
     if (!this.contextService.isBusy && !request.http.headers.has("m2m") && !request?.request?.query?.includes("__ApolloGetServiceDefinition__")) {
-      this.logger.log("Retrieving claims");
       const ctx = await this.contextService.retrieveUserClaims();
-      this.logger.log(this.contextService.userContextData);
       if (ctx) {
         Object.assign(
           context,
@@ -73,9 +83,7 @@ export class AuthenticatedRemoteDataSource
     );
     request.http.headers.set(
       'claims',
-      base(context.claims || ''),
+      base((context.claims || []).join(" ")),
     );
-
-    this.logger.log(request.http.headers);
   }
 }

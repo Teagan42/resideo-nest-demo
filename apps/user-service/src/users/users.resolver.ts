@@ -56,7 +56,7 @@ export class UsersResolver {
       description: 'Returns all users in the store',
     },
   )
-  @UseInterceptors(AuthenticationInterceptor)
+  // @UseInterceptors(AuthenticationInterceptor)
   getAllUsers(): User[] {
     return this.usersService.all();
   }

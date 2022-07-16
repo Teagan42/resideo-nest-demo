@@ -27,7 +27,6 @@ export class GatewayService
     private readonly contextService: ContextService,
     private readonly remoteDataSourceFactory: RemoteDataSourceFactory,
   ) {
-    this.logger.log(`Inside Gateway Service: ${contextService} ${remoteDataSourceFactory}`);
   }
 
   onModuleInit(): any {

@@ -82,7 +82,6 @@ export class ClaimsResolver {
     },
   )
   async getAllClaims(): Promise<Claim[]> {
-    this.logger.log('Getting claims');
     return this.claimsService.all();
   }
 

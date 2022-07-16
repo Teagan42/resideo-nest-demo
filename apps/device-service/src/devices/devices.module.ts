@@ -29,6 +29,7 @@ import { UsersResolver } from './users.resolver';
           autoSchemaFile: true,
           debug: true,
           playground: true,
+          context: ({req, res}) => ({req, res}),
           typeDefs: {
             ...scalarTypeDefs,
           },
@@ -48,10 +49,7 @@ import { UsersResolver } from './users.resolver';
       DevicesService,
       DevicesResolver,
       UsersResolver,
-      {
-        provide: APP_INTERCEPTOR,
-        useClass: AuthenticationInterceptor,
-      },
+      AuthenticationInterceptor,
     ],
     exports: [
       LoggerModule,

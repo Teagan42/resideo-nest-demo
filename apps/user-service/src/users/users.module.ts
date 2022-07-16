@@ -40,10 +40,10 @@ import { UsersService } from './users.service';
     providers: [
       UsersService,
       UsersResolver,
-      {
-        provide: APP_INTERCEPTOR,
-        useClass: AuthenticationInterceptor,
-      },
+      // {
+      //   provide: APP_INTERCEPTOR,
+      //   useClass: AuthenticationInterceptor,
+      // },
     ],
     exports: [
       LoggerModule,

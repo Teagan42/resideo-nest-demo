@@ -18,11 +18,12 @@ import { CreateDeviceDto } from './models/dto/create.device.dto';
 import { User } from './models/user.model';
 
 @Resolver((of) => Device)
+// @UseInterceptors(AuthenticationInterceptor)
 export class DevicesResolver {
   constructor(
     private devicesService: DevicesService,
   ) {
-    const input = new CreateDeviceDto();
+    var input = new CreateDeviceDto();
     input.name = 'Teagan\'s Thermostat';
     input.userId = toId(
       'User',
@@ -34,6 +35,18 @@ export class DevicesResolver {
       '1',
     );
     this.devicesService.create(input);
+    input = new CreateDeviceDto();
+    input.name = 'Bob\'s Doorbell';
+    input.userId = toId(
+      'User',
+      '101',
+    );
+    input.deviceId = 'ff:ff:22:33:44:55';
+    input.id = toId(
+      'Device',
+      '2',
+    );
+    this.devicesService.create(input);
   }
 
   @Query(
@@ -43,6 +56,7 @@ export class DevicesResolver {
       description: 'Retrieves all devices in store',
     },
   )
+  // @UseInterceptors(AuthenticationInterceptor)
   getAllDevices(): Device[] {
     return this.devicesService.all();
   }
@@ -54,7 +68,7 @@ export class DevicesResolver {
       description: 'Returns the device with the specified id',
     },
   )
-  @UseInterceptors(AuthenticationInterceptor)
+  // @UseInterceptors(AuthenticationInterceptor)
   getDevice(@Args({
                     name: 'id',
                     description: 'The identifier of the device to retrieve',
@@ -78,7 +92,7 @@ export class DevicesResolver {
       description: 'Create a new Device',
     },
   )
-  @UseInterceptors(AuthenticationInterceptor)
+  // @UseInterceptors(AuthenticationInterceptor)
   async createDevice(@Args(
     'input',
     { type: () => CreateDeviceDto },

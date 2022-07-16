@@ -32,24 +32,19 @@ export class ContextData {
     subjectId: string | null,
     field: string | null,
   ): this {
-    this.logger.log("Assigning Claim");
     const claim = ContextData.buildClaimString(
       action,
       subject,
       subjectId,
       field,
     );
-    this.logger.log(`Claim ${claim}`);
     const claimSet = new Set(this._claims);
     if (!active) {
-      this.logger.log("Deleting")
       claimSet.delete(claim);
     } else {
-      this.logger.log("Adding");
       claimSet.add(claim);
     }
     this._claims = Array.from(claimSet);
-    this.logger.log(`Claims ${Array.from(this._claims)}`);
     return this;
   }
 
