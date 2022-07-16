@@ -11,7 +11,10 @@ import {
   LoggerService,
 } from '@resideo-nest/core';
 import {base} from "@resideo-nest/core/helpers";
-import { GraphQLResponse } from 'apollo-server-plugin-base';
+import {
+  GraphQLRequestContext,
+  GraphQLResponse,
+} from 'apollo-server-plugin-base';
 
 @Injectable()
 export class RemoteDataSourceFactory {
@@ -53,9 +56,11 @@ export class AuthenticatedRemoteDataSource
 
   async process(options: GraphQLDataSourceProcessOptions<Record<string, any>>): Promise<GraphQLResponse> {
     const result = await super.process(options);
-    if (!result.data?._service) {
+    if (!result.data?._service && !options.request.http.headers.has("m2M")) {
+      this.logger.log(`operationName: ${options.request.operationName}`);
+      this.logger.log(options.request)
       this.logger.log(JSON.stringify(
-        result,
+        result.data,
         null,
         2
       ));

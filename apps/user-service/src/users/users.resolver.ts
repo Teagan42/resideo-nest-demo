@@ -8,6 +8,7 @@ import {
 } from '@nestjs/graphql';
 import {
   AuthenticationInterceptor,
+  LoggingInterceptor,
   NodeId,
   toId,
 } from '@resideo-nest/core';
@@ -83,6 +84,7 @@ export class UsersResolver {
       description: 'Returns users matching the filter criteria',
     },
   )
+  @UseInterceptors(LoggingInterceptor)
   filterUsers(@Args({
                       name: 'criteria',
                       type: () => FilterUserDto,

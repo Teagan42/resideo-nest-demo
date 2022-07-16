@@ -78,6 +78,23 @@ export class ContextService {
     this.schema = schema;
   }
 
+  public async hasAbility(
+    action: string,
+    subject: string,
+    subjectId: string | null = null
+  ) {
+    const requiredClaim = ContextData.buildClaimString(
+      action,
+      subject,
+      subjectId
+    );
+
+    return this.contextData
+      .claims.some(
+        (claim) => claim.startsWith(requiredClaim)
+      );
+  }
+
   public async retrieveUserClaims(): Promise<ContextData> {
     if (!this.isLoaded || !this.schema) {
       return this.contextData;

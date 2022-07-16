@@ -48,11 +48,11 @@ export class ContextData {
     return this;
   }
 
-  private static buildClaimString(
+  public static buildClaimString(
     action: string,
-    subject: string | null,
-    subjectId: string | null,
-    field: string | null,
+    subject: string | null = null,
+    subjectId: string | null = null,
+    field: string | null = null,
   ): string {
     let claim = action;
     if (subject) {

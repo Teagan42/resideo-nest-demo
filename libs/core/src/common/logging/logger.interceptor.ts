@@ -1,30 +1,23 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
-import { LoggerService } from '@resideo-nest/core';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {
+  tap,
+  timeout,
+} from 'rxjs/operators';
 
 @Injectable()
-export class LoggerInterceptor implements NestInterceptor {
-  constructor(
-    private readonly logger: LoggerService,
-  ) {
-  }
+export class LoggingInterceptor implements NestInterceptor {
+  async intercept(context: ExecutionContext, next: CallHandler): Promise<any> {
+    console.log('Before...');
 
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler<any>
-  ): Observable<any> {
     const now = Date.now();
-
-    return next
+    const result = await next
       .handle()
-      .pipe(
-        // tap(() => this.logger.log(`ExecutionTime: ${Date.now() -  now}ms`))
-      )
+      .toPromise();
+
+    console.log(JSON.stringify(result, null, 2));
+
+    return result;
+
   }
 }

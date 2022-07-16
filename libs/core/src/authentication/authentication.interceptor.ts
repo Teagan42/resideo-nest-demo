@@ -29,7 +29,7 @@ export class AuthenticationInterceptor
     return next.handle()
                .pipe()
       .lift((x) => {
-        this.logger.log(x);
+        this.logger.log(x.headers);
         return x
       })
   }

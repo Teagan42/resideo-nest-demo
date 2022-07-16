@@ -40,6 +40,7 @@ import { UsersService } from './users.service';
     providers: [
       UsersService,
       UsersResolver,
+      AuthenticationInterceptor,
       // {
       //   provide: APP_INTERCEPTOR,
       //   useClass: AuthenticationInterceptor,
