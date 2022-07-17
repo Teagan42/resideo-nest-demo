@@ -41,7 +41,6 @@ import { UsersService } from './users.service';
       UsersService,
       UsersResolver,
       AuthenticationInterceptor,
-      // AuthenticationPlugin,
     ],
     exports: [
       LoggerModule,
