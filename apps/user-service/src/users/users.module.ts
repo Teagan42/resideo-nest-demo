@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
-  AuthenticationInterceptor,
+  AuthenticationInterceptor, AuthenticationPlugin,
   LoggerModule,
   NodeId,
 } from '@resideo-nest/core';
@@ -41,10 +41,7 @@ import { UsersService } from './users.service';
       UsersService,
       UsersResolver,
       AuthenticationInterceptor,
-      // {
-      //   provide: APP_INTERCEPTOR,
-      //   useClass: AuthenticationInterceptor,
-      // },
+      // AuthenticationPlugin,
     ],
     exports: [
       LoggerModule,

@@ -5,10 +5,9 @@ import {
   Parent,
   Query,
   ResolveField,
-  Resolver,
+  Resolver, ResolveReference,
 } from '@nestjs/graphql';
 import {
-  AuthenticationInterceptor,
   NodeId,
   toId,
 } from '@resideo-nest/core';
@@ -47,6 +46,12 @@ export class DevicesResolver {
       '2',
     );
     this.devicesService.create(input);
+  }
+
+  @ResolveReference()
+  resolveReference(reference: { __typename: string; id: string }): Device {
+    console.log("Resolve device reference");
+    return this.devicesService.findById(reference.id);
   }
 
   @Query(

@@ -118,6 +118,7 @@ export class UsersResolver {
 
   @ResolveReference()
   resolveReference(reference: { __typename: string; id: string }): User {
+    console.log("Resolve user reference");
     return this.usersService.findById(reference.id);
   }
 

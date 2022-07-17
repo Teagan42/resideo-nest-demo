@@ -216,6 +216,7 @@ export class ClaimsResolver {
   resolveReference(
     reference: { __typename: string, id: string },
   ): Claim {
+    console.log("Resolve claim reference");
     return this.claimsService.findById(reference.id);
   }
 

@@ -8,3 +8,4 @@ export * from './authentication';
 export * from './auth';
 export * from './authorization';
 export * from './context';
+export * from './GraphQLAuthModule';

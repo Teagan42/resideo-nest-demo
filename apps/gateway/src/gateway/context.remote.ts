@@ -58,12 +58,12 @@ export class AuthenticatedRemoteDataSource
     const result = await super.process(options);
     if (!result.data?._service && !options.request.http.headers.has("m2M")) {
       this.logger.log(`operationName: ${options.request.operationName}`);
-      this.logger.log(options.request)
-      this.logger.log(JSON.stringify(
-        result.data,
-        null,
-        2
-      ));
+      // this.logger.log(options.request)
+      // this.logger.log(JSON.stringify(
+      //   result.data,
+      //   null,
+      //   2
+      // ));
     }
     return result;
   }
@@ -76,14 +76,11 @@ export class AuthenticatedRemoteDataSource
     if (!this.contextService.isBusy && !request.http.headers.has("m2m") && !request?.request?.query?.includes("__ApolloGetServiceDefinition__")) {
       const ctx = await this.contextService.retrieveUserClaims();
       if (ctx) {
-        Object.assign(
-          context,
-          ctx
-        );
+        context["claims"] = ctx.claims;
       }
     }
     request.http.headers.set(
-      'user-id',
+      'userId',
       context.userId,
     );
     request.http.headers.set(
