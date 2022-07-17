@@ -1,2 +1,2 @@
 #!/bin/zsh
-nest build --debug --watch core
+nest build --watch core

@@ -29,7 +29,14 @@ import { UsersResolver } from './users.resolver';
           autoSchemaFile: true,
           debug: true,
           playground: true,
-          context: ({req, res}) => ({req, res}),
+          context: ({req, res}) => (
+            {
+              req,
+              res,
+              userId: req?.headers?.userId,
+              claims: req?.headers?.claims
+            }
+          ),
           typeDefs: {
             ...scalarTypeDefs,
           },

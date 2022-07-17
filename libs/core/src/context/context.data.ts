@@ -12,13 +12,9 @@ export class ContextData {
 
   constructor(
     private readonly logger: LoggerService,
-    @Inject(CONTEXT_DATA) private readonly _userId: string,
+    @Inject(CONTEXT_DATA) public userId: string,
   ) {
     this.logger.setContext("ContextData");
-  }
-
-  get userId(): string {
-    return this._userId;
   }
 
   get claims(): string[] {
