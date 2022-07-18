@@ -3,10 +3,11 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
-  AuthenticationInterceptor,
+  AUTH_PLUGIN_DELEGATE, AuthorizationPlugin,
+  CanReadNode,
+  CanReadType,
   LoggerModule,
   NodeId,
 } from '@resideo-nest/core';
@@ -18,6 +19,8 @@ import { DevicesResolver } from './devices.resolver';
 import { DevicesService } from './devices.service';
 import { User } from './models/user.model';
 import { UsersResolver } from './users.resolver';
+import {authZApolloPlugin} from "@graphql-authz/apollo-server-plugin";
+import {Device} from "@resideo-nest/device-service/devices/models/device.model";
 
 @Module(
   {
@@ -29,14 +32,15 @@ import { UsersResolver } from './users.resolver';
           autoSchemaFile: true,
           debug: true,
           playground: true,
-          context: ({req, res}) => (
-            {
+          context: ({req, res}) => {
+            console.log('DevicesContext', req?.headers || "");
+            return {
               req,
               res,
               userId: req?.headers?.userId,
               claims: req?.headers?.claims
-            }
-          ),
+            };
+          },
           typeDefs: {
             ...scalarTypeDefs,
           },
@@ -56,7 +60,17 @@ import { UsersResolver } from './users.resolver';
       DevicesService,
       DevicesResolver,
       UsersResolver,
-      AuthenticationInterceptor,
+      {
+        provide: AUTH_PLUGIN_DELEGATE,
+        useValue: authZApolloPlugin({
+            rules: {
+              CanReadType,
+              CanReadDevice: CanReadNode<Device>("Device")
+            }
+          }
+        )
+      },
+      AuthorizationPlugin,
     ],
     exports: [
       LoggerModule,

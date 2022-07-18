@@ -12,7 +12,7 @@ export const SubjectUnion = createUnionType(
       Device,
     ],
     resolveType: (value) => {
-      const logger = new LoggerService('SUBJECT UNION');
+      const logger = new LoggerService('SUBJECT UNION', []);
       logger.log(getTypenameFromId(value.id));
       switch (getTypenameFromId(value.id)) {
         case 'User':

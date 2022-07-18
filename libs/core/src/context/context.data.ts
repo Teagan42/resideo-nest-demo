@@ -8,17 +8,13 @@ export const CONTEXT_DATA = Symbol('Container for user context');
 
 @Injectable()
 export class ContextData {
-  private _claims: string[] = [];
+  public claims: string[] = [];
 
   constructor(
     private readonly logger: LoggerService,
     @Inject(CONTEXT_DATA) public userId: string,
   ) {
     this.logger.setContext("ContextData");
-  }
-
-  get claims(): string[] {
-    return this._claims;
   }
 
   public assignClaim(
@@ -34,13 +30,13 @@ export class ContextData {
       subjectId,
       field,
     );
-    const claimSet = new Set(this._claims);
+    const claimSet = new Set(this.claims);
     if (!active) {
       claimSet.delete(claim);
     } else {
       claimSet.add(claim);
     }
-    this._claims = Array.from(claimSet);
+    this.claims = Array.from(claimSet);
     return this;
   }
 

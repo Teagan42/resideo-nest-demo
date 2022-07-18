@@ -7,7 +7,6 @@ import {
   ResolveReference,
 } from '@nestjs/graphql';
 import {
-  AuthenticationInterceptor,
   LoggingInterceptor,
   NodeId,
   toId,

@@ -4,6 +4,7 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
+  AuthZ,
   MAC,
   Node,
   NodeId,
@@ -19,6 +20,14 @@ import { User } from './user.model';
   },
 )
 @Directive('@key(fields: "id")')
+@AuthZ(
+  {
+    rules: [
+      // 'CanReadType',
+      'CanReadDevice'
+    ]
+  }
+)
 export class Device
   extends Node {
   @Field(

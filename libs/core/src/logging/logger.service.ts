@@ -3,9 +3,10 @@ import {
   Inject,
   Injectable,
   LoggerService as LoggingService,
+  LogLevel,
   Scope,
 } from '@nestjs/common';
-import { LOGGER_CONTEXT } from './logger.provider';
+import {LOGGER_CONTEXT, LOGGER_LEVELS} from './logger.provider';
 
 @Injectable(
   {
@@ -17,8 +18,10 @@ export class LoggerService
   implements LoggingService {
   constructor(
     @Inject(LOGGER_CONTEXT) rootContext: string,
+    @Inject(LOGGER_LEVELS) levels: LogLevel[]
   ) {
     super(rootContext);
+    this.setLogLevels(levels)
   }
 
   withContext(context: string): this {

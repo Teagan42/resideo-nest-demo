@@ -30,7 +30,7 @@ export class ContextModule {
           options: {
             headers: {
               'content-type': 'application/json',
-              'user-id': toId(
+              'userid': toId(
                 'User',
                 '42',
               )

@@ -3,10 +3,8 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
-  AuthenticationInterceptor, AuthenticationPlugin,
   LoggerModule,
   NodeId,
 } from '@resideo-nest/core';
@@ -20,7 +18,7 @@ import { UsersService } from './users.service';
 @Module(
   {
     imports: [
-      LoggerModule.build('User Service'),
+      LoggerModule.build('User Service', []),
       GraphQLModule.forRoot<ApolloFederationDriverConfig>(
         {
           driver: ApolloFederationDriver,
@@ -40,7 +38,6 @@ import { UsersService } from './users.service';
     providers: [
       UsersService,
       UsersResolver,
-      AuthenticationInterceptor,
     ],
     exports: [
       LoggerModule,
