@@ -25,16 +25,10 @@ export class AuthorizationPlugin implements ApolloServerPlugin {
   async requestDidStart(
     requestContext: GraphQLRequestContext<BaseContext>
   ): Promise<GraphQLRequestListener<BaseContext> | void> {
-    this.logger.log("requestDidStart");
     if (this.delegate.requestDidStart) {
-      this.logger.log(`requestDidStart - delegating ${requestContext.request.http.headers.get("userId") || "no userid"}`);
-      this.logger.log(`requestDidStart - context - ${Object.keys(requestContext.context)} ${requestContext.context["userId"] || "no userid"}`);
       if (requestContext.context["claims"] && isBase64(requestContext.context["claims"])) {
         requestContext.context["claims"] = debase(requestContext.context["claims"]).split(" ");
       }
-      // if (requestContext?.request?.http?.headers) {
-      //   this.logger.log(requestContext.request.http.headers);
-      // }
       return await this.delegate.requestDidStart(requestContext);
     }
     return;

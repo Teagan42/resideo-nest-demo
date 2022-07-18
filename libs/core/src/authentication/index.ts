@@ -1,2 +1,3 @@
-export * from './authentication.context';
-export * from './authentication.plugin';
+export * from './authentication.module';
+export * from './authentication.service';
+// export * from './authentication.strategy';

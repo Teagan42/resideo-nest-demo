@@ -33,6 +33,7 @@ export class DevicesResolver {
       'Device',
       '1',
     );
+    console.log(input.id);
     this.devicesService.create(input);
     input = new CreateDeviceDto();
     input.name = 'Bob\'s Doorbell';
@@ -45,6 +46,7 @@ export class DevicesResolver {
       'Device',
       '2',
     );
+    console.log(input.id);
     this.devicesService.create(input);
   }
 

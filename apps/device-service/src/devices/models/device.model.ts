@@ -23,7 +23,7 @@ import { User } from './user.model';
 @AuthZ(
   {
     rules: [
-      // 'CanReadType',
+      'CanReadDevices',
       'CanReadDevice'
     ]
   }

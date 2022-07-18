@@ -32,15 +32,12 @@ import {Device} from "@resideo-nest/device-service/devices/models/device.model";
           autoSchemaFile: true,
           debug: true,
           playground: true,
-          context: ({req, res}) => {
-            console.log('DevicesContext', req?.headers || "");
-            return {
+          context: ({req, res}) => ({
               req,
               res,
               userId: req?.headers?.userId,
               claims: req?.headers?.claims
-            };
-          },
+            }),
           typeDefs: {
             ...scalarTypeDefs,
           },
@@ -64,7 +61,7 @@ import {Device} from "@resideo-nest/device-service/devices/models/device.model";
         provide: AUTH_PLUGIN_DELEGATE,
         useValue: authZApolloPlugin({
             rules: {
-              CanReadType,
+              CanReadDevices: CanReadType<Device>("Device"),
               CanReadDevice: CanReadNode<Device>("Device")
             }
           }
