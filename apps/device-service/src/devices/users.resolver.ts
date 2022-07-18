@@ -10,7 +10,7 @@ import { User } from './models/user.model';
 @Resolver(() => User)
 export class UsersResolver {
   constructor(
-    private readonly devicesService: DevicesService
+    private readonly devicesService: DevicesService,
   ) {
   }
 

@@ -6,10 +6,10 @@ import { CreateDeviceDto } from './models/dto/create.device.dto';
 
 @Injectable()
 export class DevicesService {
+  private devices: Device[] = [];
+
   constructor() {
   }
-
-  private devices: Device[] = [];
 
   all(): Device[] {
     return this.devices;
@@ -32,7 +32,13 @@ export class DevicesService {
     );
     result.createdAt = new Date();
     result.updatedAt = new Date();
-    result.id = toId("Device", randomInt(1000).toString());
+    if (!result.id) {
+      result.id = toId(
+        'Device',
+        randomInt(1000)
+          .toString(),
+      );
+    }
     this.devices.push(result);
     return result;
   }

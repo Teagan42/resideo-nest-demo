@@ -4,20 +4,30 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
+  AuthZ,
   MAC,
   Node,
-  NodeID,
+  NodeId,
 } from '@resideo-nest/core';
 import { User } from './user.model';
 
 @ObjectType(
   {
+    description: 'Represents a smart device',
     implements: [
       Node,
     ],
   },
 )
 @Directive('@key(fields: "id")')
+@AuthZ(
+  {
+    rules: [
+      'CanReadDevices',
+      'CanReadDevice'
+    ]
+  }
+)
 export class Device
   extends Node {
   @Field(
@@ -38,11 +48,20 @@ export class Device
   name: string;
 
   @Field(
-    () => NodeID,
     {
-      name: "userId",
-      description: "Identifier of the user associated with this device"
-    }
+      name: 'temperature',
+      description: 'Temperature reading',
+      nullable: true,
+    },
+  )
+  temperature: number;
+
+  @Field(
+    () => NodeId,
+    {
+      name: 'userId',
+      description: 'The identifier of the user this device is associated with',
+    },
   )
   userId: string;
 

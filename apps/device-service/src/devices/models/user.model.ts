@@ -4,26 +4,45 @@ import {
   ObjectType,
 } from '@nestjs/graphql';
 import {
-  NodeID,
+  DateTime,
+  Node,
+  NodeId,
 } from '@resideo-nest/core';
 import { Device } from './device.model';
 
-@ObjectType()
+@ObjectType(
+  {
+    implements: Node,
+  },
+)
 @Directive('@extends')
 @Directive('@key(fields: "id")')
-export class User {
+export class User
+  extends Node {
   @Field(
-    () => NodeID,
+    () => NodeId,
   )
   @Directive('@external')
   id: string;
 
   @Field(
+    () => DateTime,
+  )
+  @Directive('@external')
+  createdAt: Date;
+
+  @Field(
+    () => DateTime,
+  )
+  @Directive('@external')
+  updatedAt: Date;
+
+  @Field(
     () => [Device],
     {
-      description: "Devices associated with this user",
-      nullable: true
-    }
+      description: 'Devices associated with this user',
+      nullable: true,
+    },
   )
   devices?: Device[];
 }

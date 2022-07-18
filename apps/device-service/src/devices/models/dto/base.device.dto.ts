@@ -8,10 +8,12 @@ import { Device } from '../device.model';
 @InputType(
   'BaseDeviceDto',
   {
-    isAbstract: true
-  }
+    isAbstract: true,
+  },
 )
-export class BaseDeviceDto extends IntersectionType(
-  Device,
-  NodeDto
-) {}
+export class BaseDeviceDto
+  extends IntersectionType(
+    Device,
+    NodeDto,
+  ) {
+}

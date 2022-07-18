@@ -29,6 +29,15 @@
         "tsConfigPath": "apps/device-service/tsconfig.app.json"
       }
     },
+    "claim-service": {
+      "type": "application",
+      "root": "apps/claim-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/claim-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/claim-service/tsconfig.app.json"
+      }
+    },
     "gateway": {
       "type": "application",
       "root": "apps/gateway",
@@ -43,5 +52,5 @@
     "webpack": false,
     "tsConfigPath": "tsconfig.json"
   },
-  "monorepo": true
+  "monorepo": false
 }

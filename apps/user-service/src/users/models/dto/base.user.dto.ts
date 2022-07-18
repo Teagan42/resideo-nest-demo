@@ -1,11 +1,8 @@
 import {
-  Field,
   InputType,
   IntersectionType,
-  OmitType,
 } from '@nestjs/graphql';
-import { EmailAddress } from '@resideo-nest/core';
-import { NodeDto } from '@resideo-nest/core/types/inputObjects/NodeDto';
+import { NodeDto } from '@resideo-nest/core';
 import { User } from '../user.model';
 
 @InputType(
@@ -14,7 +11,9 @@ import { User } from '../user.model';
     isAbstract: true,
   },
 )
-export class BaseUserDto extends IntersectionType(
-  User,
-  NodeDto
-) {}
+export class BaseUserDto
+  extends IntersectionType(
+    User,
+    NodeDto,
+  ) {
+}

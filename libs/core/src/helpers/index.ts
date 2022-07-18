@@ -1,2 +1,2 @@
 export * from './node-encoder';
-export * from './HasID'
+export * from './regex';

@@ -1,11 +1,10 @@
 import {
   Field,
-  InputType,
   InterfaceType,
 } from '@nestjs/graphql';
 import {
   DateTime,
-  NodeID,
+  NodeId,
 } from '@resideo-nest/core/types';
 
 @InterfaceType(
@@ -17,7 +16,7 @@ import {
 )
 export class Node {
   @Field(
-    () => NodeID,
+    () => NodeId,
     {
       name: 'id',
       description: 'The identifier of the node',
