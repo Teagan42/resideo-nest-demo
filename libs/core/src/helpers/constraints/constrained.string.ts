@@ -28,7 +28,7 @@ ZodString.prototype.toLowerCase = describeAndApply(
 );
 ZodString.prototype.regex = describeAndApply(
     ZodString.prototype.regex,
-    (regex, message) => `Must match ${escapeRegExp(regex)}.`,
+    (regex, message) => `Must match the pattern "${escapeRegExp(regex)}".`,
 );
 ZodString.prototype.email = describeAndApply(
     ZodString.prototype.email,
@@ -44,19 +44,19 @@ ZodString.prototype.emoji = describeAndApply(
 );
 ZodString.prototype.uuid = describeAndApply(
     ZodString.prototype.uuid,
-    (message) => `Must be a valid UUID.`,
+    (message) => `Must be a valid Universally Unique Identifier.`,
 );
 ZodString.prototype.cuid = describeAndApply(
     ZodString.prototype.cuid,
-    (message) => `Must be a valid CUID.`,
+    (message) => `Must be a valid Collision Resistant Identifier (deprecated).`,
 );
 ZodString.prototype.cuid2 = describeAndApply(
     ZodString.prototype.cuid2,
-    (message) => `Must be a valid CUID2.`,
+    (message) => `Must be a valid Collison Resistant Identifier.`,
 );
 ZodString.prototype.ulid = describeAndApply(
     ZodString.prototype.ulid,
-    (message) => `Must be a valid ULID.`,
+    (message) => `Must be a valid Universally Unique Lexicographically Sortable Identifier.`,
 );
 ZodString.prototype.ip = describeAndApply(
     ZodString.prototype.ip,
@@ -71,13 +71,13 @@ ZodString.prototype.datetime = describeAndApply(
           message?: string | undefined;
           precision?: number | null;
           offset?: boolean
-        }) => `Must be a valid datetime.`,
+        }) => `Must be a valid ISO datetime.`,
 );
 ZodString.prototype.includes = describeAndApply(
     ZodString.prototype.includes,
     (
         value: string,
-        options?: { message?: string; position?: number }) => `Must include the substring ${value}.`,
+        options?: { message?: string; position?: number }) => `Must include the substring ${value} after the ${options?.position ?? 0} character.`,
 );
 ZodString.prototype.startsWith = describeAndApply(
     ZodString.prototype.startsWith,
