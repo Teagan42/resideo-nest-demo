@@ -1,10 +1,10 @@
-import {ZodString} from 'zod';
+import {ZodBigInt} from 'zod';
 import {GraphQLError, GraphQLScalarType, Kind, ValueNode} from 'graphql';
 
-export const ConstrainedString = (
+export const ConstrainedInt = (
     name: string,
     description: string,
-    constraints: ZodString,
+    constraints: ZodBigInt,
 ): GraphQLScalarType => {
   const validate = (value: string) => {
     return constraints.parse(value);
@@ -17,25 +17,23 @@ export const ConstrainedString = (
             `${constraints.description}`,
         parseLiteral: (
             valueNode: ValueNode,
-        ): string => {
-          if (valueNode.kind !== Kind.STRING) {
+        ): bigint => {
+          if (valueNode.kind !== Kind.INT) {
             throw new GraphQLError(
-                `[${name}] Value is not string : ${valueNode.kind}`,
+                `[${name}] Value is not an int : ${valueNode.kind}`,
             );
           }
-          validate(valueNode.value);
-          return valueNode.value;
+          return validate(valueNode.value);
         },
         parseValue: (
             inputValue: unknown,
-        ): string => {
-          if (typeof inputValue !== 'string') {
+        ): bigint => {
+          if (typeof inputValue !== 'bigint') {
             throw new TypeError(
-                `[${name}] Value is not string : ${typeof inputValue}`,
+                `[${name}] Value is not an int : ${typeof inputValue}`,
             );
           }
-          validate(inputValue);
-          return inputValue;
+          return validate(inputValue.toString());
         },
         serialize: (outputValue: unknown): string => {
           return outputValue.toString();

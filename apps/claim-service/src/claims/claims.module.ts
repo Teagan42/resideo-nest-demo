@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
   LoggerModule,
-  NodeId,
+  NodeId, Password, Username,
 } from '@resideo-nest/core';
 import {
   resolvers as scalarResolvers,
@@ -48,6 +48,8 @@ import { UsersResolver } from './users.resolver';
             ...scalarResolvers,
             NodeId,
             SubjectUnion,
+            Password: Password,
+            Username: Username
           },
           buildSchemaOptions: {
             orphanedTypes: [

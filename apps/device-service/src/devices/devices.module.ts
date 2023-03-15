@@ -9,7 +9,7 @@ import {
   CanReadNode,
   CanReadType,
   LoggerModule,
-  NodeId,
+  NodeId, Password, Username,
 } from '@resideo-nest/core';
 import {
   resolvers as scalarResolvers,
@@ -44,6 +44,8 @@ import {Device} from "@resideo-nest/device-service/devices/models/device.model";
           resolvers: {
             ...scalarResolvers,
             NodeID: NodeId,
+            Password: Password,
+            Username: Username
           },
           buildSchemaOptions: {
             orphanedTypes: [

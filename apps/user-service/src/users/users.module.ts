@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
   LoggerModule,
-  NodeId,
+  NodeId, Password, Username,
 } from '@resideo-nest/core';
 import {
   resolvers as scalarResolvers,
@@ -31,6 +31,8 @@ import { UsersService } from './users.service';
           resolvers: {
             ...scalarResolvers,
             NodeID: NodeId,
+            Password: Password,
+            Username: Username
           },
         },
       ),

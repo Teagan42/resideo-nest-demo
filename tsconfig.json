@@ -17,6 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "plugins": [
+      { "transform": "ts-transformer-type-structure/transformer" },
+      { "transform": "ts-transformer-keys/transformer" }
+    ],
     "paths": {
       "@resideo-nest/core": [
         "libs/core/src"
